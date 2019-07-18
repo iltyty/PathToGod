@@ -35,10 +35,13 @@
       },
       {
         "__id__": 18
+      },
+      {
+        "__id__": 19
       }
     ],
     "_prefab": {
-      "__id__": 19
+      "__id__": 20
     },
     "_opacity": 255,
     "_color": {
@@ -603,6 +606,21 @@
       "width": 30,
       "height": 6
     },
+    "_id": ""
+  },
+  {
+    "__type__": "357d2CORlhGdoFUOLPUyQDA",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "sprites": [
+      {
+        "__id__": 3
+      }
+    ],
     "_id": ""
   },
   {

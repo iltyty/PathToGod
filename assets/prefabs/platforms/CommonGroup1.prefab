@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "GrassGroup2",
+    "_name": "CommonGroup1",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -32,10 +32,13 @@
       },
       {
         "__id__": 13
+      },
+      {
+        "__id__": 14
       }
     ],
     "_prefab": {
-      "__id__": 14
+      "__id__": 15
     },
     "_opacity": 255,
     "_color": {
@@ -232,7 +235,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2ad47bbb-c393-4281-9967-a5c569cdf8bd"
+      "__uuid__": "d9ca404a-507c-485b-b64d-51051eaa9fe4"
     },
     "fileId": "fdrA6d69dLMYohidr/VyRf",
     "sync": false
@@ -272,7 +275,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 138,
-      "height": 147
+      "height": 158
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -282,7 +285,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": -136,
-      "y": 9,
+      "y": 18,
       "z": 0
     },
     "_scale": {
@@ -316,7 +319,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "4f0fe278-474c-4aac-879b-11a235aae721"
+      "__uuid__": "1370200b-ed7d-4bc9-b907-d1ebab5081f5"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -389,7 +392,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2ad47bbb-c393-4281-9967-a5c569cdf8bd"
+      "__uuid__": "d9ca404a-507c-485b-b64d-51051eaa9fe4"
     },
     "fileId": "92+cZ/gbFJ/Yn7pIRISW9/",
     "sync": false
@@ -446,12 +449,27 @@
     "_id": ""
   },
   {
+    "__type__": "357d2CORlhGdoFUOLPUyQDA",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "sprites": [
+      {
+        "__id__": 3
+      }
+    ],
+    "_id": ""
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2ad47bbb-c393-4281-9967-a5c569cdf8bd"
+      "__uuid__": "d9ca404a-507c-485b-b64d-51051eaa9fe4"
     },
     "fileId": "b6CazT8b1LBrXD1ZvtQpgO",
     "sync": false

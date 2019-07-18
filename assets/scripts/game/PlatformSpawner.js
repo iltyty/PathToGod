@@ -24,77 +24,44 @@ cc.Class({
             default: new cc.Vec2(),
         },
 
-        // 普通平台预制资源
-        normalPrefab: {
+        // 要生成的平台预制资源
+        platformPrefab: {
             default: null,
             type: cc.Prefab
         },
 
-        // 火焰平台预制资源
-        firePrefab: {
-            default: null,
-            type: cc.Prefab
+        // 所有平台的预制资源
+        platformPrefabs: {
+            default: [],
+            type: [cc.Prefab]
         },
 
-        // 草地平台预制资源
-        grassPrefab: {
-            default: null,
-            type: cc.Prefab
+        // 所有common主题的组合平台的预制资源
+        platformCommonPrefabs: {
+            default: [],
+            type: [cc.Prefab]
         },
 
-        // 冰原平台预制资源
-        icePrefab: {
-            default: null,
-            type: cc.Prefab
+        // 所有winter主题的组合平台的预制资源
+        platformWinterPrefabs: {
+            default: [],
+            type: [cc.Prefab]
         },
 
-        // 障碍1平台预制资源
-        obstacle1Prefab: {
-            default: null,
-            type: cc.Prefab
+        // 所有grass主题的组合平台的预制资源
+        platformGrassPrefabs: {
+            default: [],
+            type: [cc.Prefab]
         },
 
-        // 障碍2平台预制资源
-        obstacle2Prefab: {
-            default: null,
-            type: cc.Prefab
+        // 组合平台的主题
+        PlatformGroupType: {
+            default: {},
+            type: cc.Enum,
         },
 
-        // 障碍3平台预制资源
-        obstacle3Prefab: {
-            default: null,
-            type: cc.Prefab
-        },
-
-        // 障碍4平台预制资源
-        obstacle4Prefab: {
-            default: null,
-            type: cc.Prefab
-        },
-
-        // 障碍5平台预制资源
-        obstacle5Prefab: {
-            default: null,
-            type: cc.Prefab
-        },
-
-        // 障碍6平台预制资源
-        obstacle6Prefab: {
-            default: null,
-            type: cc.Prefab
-        },
-
-        // 障碍7平台预制资源
-        obstacle7Prefab: {
-            default: null,
-            type: cc.Prefab
-        },
-
-        // 障碍8平台预制资源
-        obstacle8Prefab: {
-            default: null,
-            type: cc.Prefab
-        },
+        // 生成平台对应的组合平台的主题
+        groupType: 0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -109,6 +76,12 @@ cc.Class({
         collisionManager.enabled = true;
 
         this.spawnPosition = this.initSpawnPos;
+        this.PlatformGroupType = cc.Enum({
+            Grass: 0,
+            Winter: 1,
+        });
+
+        this.randomPlatformTheme();
 
         this.node.parent.on('decidepath', this.decidePath, this);
 
@@ -118,7 +91,23 @@ cc.Class({
         }
     },
 
-    decidePath() {
+    // 每次进入游戏时随机化平台的主题
+    randomPlatformTheme () {
+        // 随机平台种类（共4种）
+        let index = parseInt(Math.random() * 4);
+        
+        if (index == 1) {
+            // 随机化结果为ice主题的平台
+            this.groupType = this.PlatformGroupType.Winter;
+        } else {
+            // 随机化结果为其他三种主题的平台
+            this.groupType = this.PlatformGroupType.Grass;
+        }
+
+        this.platformPrefab = this.platformPrefabs[index];
+    },
+
+    decidePath () {
         if(this.spawnCount > 0){
             this.spawnCount--;
             this.spawnPlatform();
@@ -129,28 +118,86 @@ cc.Class({
         }
     },
 
-    spawnPlatform() {
-        // 生成新平台
-        let platform = cc.instantiate(this.normalPrefab);
-        // 设置生成平台的位置
-        platform.setPosition(this.spawnPosition);
-        // 设置平台的分组为Platform，以便与分组为Character的人物进行碰撞
-        // platform.group = 'Platform';
-        // // 给平台添加刚体组件
-        // platform.addComponent(cc.RigidBody);
-        // // 给平台添加物理碰撞组件
-        // platform.addComponent(cc.PhysicsBoxCollider);
-        // // 设置平台的刚体类型为static，使其不受重力影响
-        // platform.getComponent(cc.RigidBody).type = cc.RigidBodyType.Static;
-        // // 开启平台的刚体碰撞监听
-        // platform.getComponent(cc.RigidBody).enabledContactListener = true;
-        // // 设置平台碰撞盒大小
-        // platform.getComponent(cc.PhysicsBoxCollider).size = new cc.Size(30, 6);
-        // // 设置平台碰撞盒的偏移量
-        // platform.getComponent(cc.PhysicsBoxCollider).offset = new cc.Vec2(10, 0);
-        this.node.addChild(platform);
+    spawnPlatform () {
+        if (this.spawnCount > 0) {
+            // 生成单个平台
+            this.spawnSinglePlatform();
+        } else {
+            // 随机化生成哪种主题的组合平台(common, winter, grass)
+            let random = parseInt(Math.random() * 2);
+            switch (random) {
+                case 0:
+                    // 生成common主题的组合平台
+                    this.spawnCommonPlatform();
+                    break;
+                case 1:
+                    // 根据groupType生成对应主题的平台
+                    switch (this.groupType) {
+                        case this.PlatformGroupType.Winter:
+                            // 生成winter主题的组合平台
+                            this.spawnWinterPlatform();
+                            break;
+                        case this.PlatformGroupType.Grass:
+                            // 生成grass主题的组合平台
+                            this.spawnGrassPlatform();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 2:
+                    // 生成钉子平台的主题
+                    break;
+                default:
+                    break;
+            }
+        }
 
         this.spawnPosition = this.getNewPosition();
+    },
+
+    // 生成单个平台
+    spawnSinglePlatform () {
+        // 生成新平台
+        let platform = cc.instantiate(this.platformPrefab);
+        // 设置生成平台的位置
+        platform.setPosition(this.spawnPosition);
+        // 添加平台
+        this.node.addChild(platform);
+    },
+
+    // 生成common主题的组合平台
+    spawnCommonPlatform () {
+        // 从4种common组合平台种随机一种
+        let random = parseInt(Math.random() * this.platformCommonPrefabs.length);
+
+        let platform = cc.instantiate(this.platformCommonPrefabs[random]);
+        platform.setPosition(this.spawnPosition);
+        platform.getComponent('PlatformChanger').changeTheme(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        
+        this.node.addChild(platform);
+    },
+
+    // 生成winter主题的组合平台
+    spawnWinterPlatform () {
+        let random = parseInt(Math.random() * this.platformWinterPrefabs.length);
+
+        let platform = cc.instantiate(this.platformWinterPrefabs[random]);
+        platform.setPosition(this.spawnPosition);
+        platform.getComponent('PlatformChanger').changeTheme(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        
+        this.node.addChild(platform);
+    },
+
+    // 生成grass主题的组合平台
+    spawnGrassPlatform () {
+        let random = parseInt(Math.random() * this.platformGrassPrefabs.length);
+
+        let platform = cc.instantiate(this.platformGrassPrefabs[random]);
+        platform.setPosition(this.spawnPosition);
+        platform.getComponent('PlatformChanger').changeTheme(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        
+        this.node.addChild(platform);
     },
 
     getNewPosition() {
