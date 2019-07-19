@@ -20,25 +20,25 @@ cc.Class({
         },
 
         // 所有common主题的组合平台的预制资源
-        platformCommonPrefabs: {
+        commonPlatformPrefabs: {
             default: [],
             type: [cc.Prefab]
         },
 
         // 所有winter主题的组合平台的预制资源
-        platformWinterPrefabs: {
+        winterPlatformPrefabs: {
             default: [],
             type: [cc.Prefab]
         },
 
         // 所有grass主题的组合平台的预制资源
-        platformGrassPrefabs: {
+        grassPlatformPrefabs: {
             default: [],
             type: [cc.Prefab]
         },
 
         // 所有钉子平台的预制资源
-        platformSpikePrefabs: {
+        spikePlatformPrefabs: {
             default: [],
             type: [cc.Prefab]
         },

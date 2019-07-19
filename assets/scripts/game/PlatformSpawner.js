@@ -48,7 +48,10 @@ cc.Class({
         groupType: 0,
 
         // 资源管理器
-        resManager: null
+        resManager: null,
+
+        // 平台对象池
+        platformPool: null
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -56,8 +59,7 @@ cc.Class({
     onLoad() {
 
         cc.director.getPhysicsManager().enabled = true;
-        cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit;
-
+        
         cc.director.getCollisionManager().enabled = true;
 
         this.spawnPosition = this.initSpawnPos;
@@ -66,6 +68,7 @@ cc.Class({
             Winter: 1,
         });
         this.resManager = this.node.parent.getChildByName('resManager').getComponent('ResManager');
+        this.platformPool = this.node.parent.getChildByName('platformPool').getComponent('PlatformPool');
 
         this.randomPlatformTheme();
 
@@ -107,7 +110,7 @@ cc.Class({
     spawnPlatform () {
         if (this.spawnCount > 0) {
             // 生成单个平台
-            this.spawnSinglePlatform(this.spawnPosition, this.resManager.singlePlatformPrefab);
+            this.spawnSinglePlatform(this.spawnPosition, this.platformPool.getSinglePlatform());
         } else {
             // 随机化生成不同主题的组合平台(common, winter, grass)
             let random = parseInt(Math.random() * 3);
@@ -118,12 +121,11 @@ cc.Class({
     },
 
     // 生成单个平台
-    spawnSinglePlatform (pos, prefab) {
-        // 生成新平台
-        let platform = cc.instantiate(prefab);
+    spawnSinglePlatform (pos, platform) {
+        // 显示平台
+        platform.active = true;
         // 设置生成平台的位置
-        platform.setPosition(pos)
-        console.log(platform.getComponent('PlatformChanger'));
+        platform.setPosition(pos);
         // 更改平台样式
         platform.getComponent('PlatformChanger').change(this.selectedSpriteFrame);
         // 添加平台
@@ -163,41 +165,37 @@ cc.Class({
 
     // 生成common主题的组合平台
     spawnCommonPlatform (pos) {
-        // 从4种common组合平台种随机一种
-        let random = parseInt(Math.random() * this.resManager.platformCommonPrefabs.length);
-        let prefab = this.resManager.platformCommonPrefabs[random];
+        let platform = this.platformPool.getCommonPlatform();
 
-        this.spawnSinglePlatform(pos, prefab);
+        this.spawnSinglePlatform(pos, platform);
     },
 
     // 生成winter主题的组合平台
     spawnWinterPlatform (pos) {
-        let random = parseInt(Math.random() * this.resManager.platformWinterPrefabs.length);
-        let prefab = this.resManager.platformWinterPrefabs[random];
-        
-        this.spawnSinglePlatform(pos, prefab);
+        let platform = this.platformPool.getWinterPlatform();
+
+        this.spawnSinglePlatform(pos, platform);
     },
 
     // 生成grass主题的组合平台
     spawnGrassPlatform (pos) {
-        let random = parseInt(Math.random() * this.resManager.platformGrassPrefabs.length);
-        let prefab = this.resManager.platformGrassPrefabs[random];
-       
-        this.spawnSinglePlatform(pos, prefab);
+        let platform = this.platformPool.getWinterPlatform();
+
+        this.spawnSinglePlatform(pos, platform);
     },
 
     // 生成钉子平台
     spawnSpikePlatform (pos) {
-        let prefab = null;
+        let platform = null;
         if (this.isRightSpawn) {
             // 当前向右生成，选择左边的钉子平台
-            prefab = this.resManager.platformSpikePrefabs[0];
+            platform = this.platformPool.getLeftSpikePlatform();
         } else {
             // 当前向左生成，选择右边的钉子平台
-            prefab = this.resManager.platformSpikePrefabs[1];
+            platform = this.platformPool.getRightSpikePlatform();
         }
 
-        this.spawnSinglePlatform(pos, prefab)
+        this.spawnSinglePlatform(pos, platform)
 
         if (this.isRightSpawn) {
             this.spikeSpawnPos = new cc.Vec2(this.spawnPosition.x - 3 * this.deltaX, this.spawnPosition.y + this.deltaY);
@@ -211,7 +209,7 @@ cc.Class({
     // 在钉子平台方向生成平台
     spawnSpikeDirPlatforms () {
         for (let i = 0; i < this.spikeSpawnCount; i++) {
-            this.spawnSinglePlatform(this.spikeSpawnPos, this.resManager.singlePlatformPrefab);
+            this.spawnSinglePlatform(this.spikeSpawnPos, this.platformPool.getSinglePlatform());
             this.spikeSpawnPos = this.getNewPosition(this.spikeSpawnPos, true);
         }
         
