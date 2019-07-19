@@ -15,9 +15,9 @@ cc.Class({
     },
 
     // 修改组合平台中间的平台样式，随机障碍物左右的位置
-    change (sprite) {
+    change (spriteFrame) {
         for (let i = 0; i < this.sprites.length; i++) {
-            this.sprites[i].spriteFrame = sprite.spriteFrame;
+            this.sprites[i].spriteFrame = spriteFrame;
         }
 
         if (this.node.name != 'SpikeGroupLeft' && this.node.name != 'SpikeGroupRight') {
