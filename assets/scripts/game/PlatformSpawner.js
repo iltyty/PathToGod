@@ -166,6 +166,7 @@ cc.Class({
     // 生成common主题的组合平台
     spawnCommonPlatform (pos) {
         let platform = this.platformPool.getCommonPlatform();
+        platform.zIndex = 999;
 
         this.spawnSinglePlatform(pos, platform);
     },
@@ -173,6 +174,7 @@ cc.Class({
     // 生成winter主题的组合平台
     spawnWinterPlatform (pos) {
         let platform = this.platformPool.getWinterPlatform();
+        platform.zIndex = 999;
 
         this.spawnSinglePlatform(pos, platform);
     },
@@ -180,6 +182,7 @@ cc.Class({
     // 生成grass主题的组合平台
     spawnGrassPlatform (pos) {
         let platform = this.platformPool.getWinterPlatform();
+        platform.zIndex = 999;
 
         this.spawnSinglePlatform(pos, platform);
     },
@@ -194,6 +197,7 @@ cc.Class({
             // 当前向左生成，选择右边的钉子平台
             platform = this.platformPool.getRightSpikePlatform();
         }
+        platform.zIndex = 999;
 
         this.spawnSinglePlatform(pos, platform)
 
