@@ -1,0 +1,97 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "SpikeClip",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.0416666666666667,
+  "sample": 24,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "spike": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": [
+              {
+                "frame": 0,
+                "value": {
+                  "__uuid__": "8156a186-3e37-4a44-88ab-478cdb03ab5a"
+                }
+              },
+              {
+                "frame": 0.25,
+                "value": {
+                  "__uuid__": "d84109d1-eb8b-49ee-9676-10008a585ad9"
+                }
+              },
+              {
+                "frame": 0.5,
+                "value": {
+                  "__uuid__": "e83d5fd5-ea0c-4257-b6f8-58e423e8d776"
+                }
+              },
+              {
+                "frame": 0.75,
+                "value": {
+                  "__uuid__": "a937f051-1958-47ad-b310-3c4466807fbb"
+                }
+              },
+              {
+                "frame": 1,
+                "value": {
+                  "__uuid__": "a9985a53-2052-4a18-a016-58cc1191cda0"
+                }
+              }
+            ]
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                21,
+                0
+              ]
+            },
+            {
+              "frame": 0.25,
+              "value": [
+                -1,
+                19,
+                0
+              ]
+            },
+            {
+              "frame": 0.5,
+              "value": [
+                0,
+                25,
+                0
+              ]
+            },
+            {
+              "frame": 0.75,
+              "value": [
+                3,
+                31,
+                0
+              ]
+            },
+            {
+              "frame": 1,
+              "value": [
+                11,
+                38,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}

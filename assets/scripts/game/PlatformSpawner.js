@@ -54,7 +54,13 @@ cc.Class({
             type: [cc.Prefab]
         },
 
-        // 组合平台的主题
+        // 所有钉子平台的预制资源
+        platformSpikePrefabs: {
+            default: [],
+            type: [cc.Prefab]
+        },
+
+        // 组合平台的主题种类枚举
         PlatformGroupType: {
             default: {},
             type: cc.Enum,
@@ -124,7 +130,7 @@ cc.Class({
             this.spawnSinglePlatform();
         } else {
             // 随机化生成哪种主题的组合平台(common, winter, grass)
-            let random = parseInt(Math.random() * 2);
+            let random = parseInt(Math.random() * 3);
             switch (random) {
                 case 0:
                     // 生成common主题的组合平台
@@ -147,6 +153,7 @@ cc.Class({
                     break;
                 case 2:
                     // 生成钉子平台的主题
+                    this.spawnSpikePlatform();
                     break;
                 default:
                     break;
@@ -173,7 +180,7 @@ cc.Class({
 
         let platform = cc.instantiate(this.platformCommonPrefabs[random]);
         platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').changeTheme(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
         
         this.node.addChild(platform);
     },
@@ -184,7 +191,7 @@ cc.Class({
 
         let platform = cc.instantiate(this.platformWinterPrefabs[random]);
         platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').changeTheme(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
         
         this.node.addChild(platform);
     },
@@ -195,7 +202,24 @@ cc.Class({
 
         let platform = cc.instantiate(this.platformGrassPrefabs[random]);
         platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').changeTheme(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        
+        this.node.addChild(platform);
+    },
+
+    // 生成钉子平台
+    spawnSpikePlatform () {
+        let platform;
+        if (this.isRightSpawn) {
+            // 当前向右生成，选择左边的钉子平台
+            platform =  cc.instantiate(this.platformSpikePrefabs[0]);
+        } else {
+            // 当前向左生成，选择右边的钉子平台
+            platform = cc.instantiate(this.platformSpikePrefabs[1]);
+        }
+
+        platform.setPosition(this.spawnPosition);
+        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
         
         this.node.addChild(platform);
     },

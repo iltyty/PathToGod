@@ -1,4 +1,3 @@
-
 cc.Class({
     extends: cc.Component,
 
@@ -62,22 +61,22 @@ cc.Class({
     },
 
     addBtnEvents() {
-        this.btnStart.on('mousedown', function(event) {
+        this.btnStart.on('touchend', function(event) {
             cc.audioEngine.playEffect(this.audioClick, false, 1);
             this.toGameScene();
         }, this);
 
-        this.btnShop.on('mousedown', function(event) {
+        this.btnShop.on('touchend', function(event) {
             cc.audioEngine.playEffect(this.audioClick, false, 1);
             this.toShopScene();
         }, this);
 
-        this.btnRank.on('mousedown', function(event) {
+        this.btnRank.on('touchend', function(event) {
             cc.audioEngine.playEffect(this.audioClick, false, 1);
             this.toRankScene();
         }, this);
 
-        this.btnSound.on('mousedonw', function(event) {
+        this.btnSound.on('touchend', function(event) {
             cc.audioEngine.playEffect(this.audioClick, false, 1);
             this.switchSoundState();
         }, this);
