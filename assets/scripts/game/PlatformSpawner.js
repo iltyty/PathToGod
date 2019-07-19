@@ -16,11 +16,21 @@ cc.Class({
         // 一次性生成平台的数量
         spawnCount: 5,
 
+        // 钉子平台方向要生成的平台数量
+        spikeSpawnCount: 3,
+
         // 下一个生成的平台是否朝向右
         isRightSpawn: false,  
+
+        // 钉子平台方向的下一个生成位置是否向右
         
         // 下一个平台生成的位置
         spawnPosition: {
+            default: new cc.Vec2(),
+        },
+
+        // 钉子平台方向的下一个平台生成位置
+        spikeSpawnPos: {
             default: new cc.Vec2(),
         },
 
@@ -127,119 +137,136 @@ cc.Class({
     spawnPlatform () {
         if (this.spawnCount > 0) {
             // 生成单个平台
-            this.spawnSinglePlatform();
+            this.spawnSinglePlatform(this.spawnPosition, this.platformPrefab);
         } else {
-            // 随机化生成哪种主题的组合平台(common, winter, grass)
+            // 随机化生成不同主题的组合平台(common, winter, grass)
             let random = parseInt(Math.random() * 3);
-            switch (random) {
-                case 0:
-                    // 生成common主题的组合平台
-                    this.spawnCommonPlatform();
-                    break;
-                case 1:
-                    // 根据groupType生成对应主题的平台
-                    switch (this.groupType) {
-                        case this.PlatformGroupType.Winter:
-                            // 生成winter主题的组合平台
-                            this.spawnWinterPlatform();
-                            break;
-                        case this.PlatformGroupType.Grass:
-                            // 生成grass主题的组合平台
-                            this.spawnGrassPlatform();
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case 2:
-                    // 生成钉子平台的主题
-                    this.spawnSpikePlatform();
-                    break;
-                default:
-                    break;
-            }
+            this.spawnRandomPlatformGroup(this.spawnPosition, random);
         }
 
-        this.spawnPosition = this.getNewPosition();
+        this.spawnPosition = this.getNewPosition(this.spawnPosition, false);
     },
 
     // 生成单个平台
-    spawnSinglePlatform () {
+    spawnSinglePlatform (pos, prefab) {
         // 生成新平台
-        let platform = cc.instantiate(this.platformPrefab);
+        let platform = cc.instantiate(prefab);
         // 设置生成平台的位置
-        platform.setPosition(this.spawnPosition);
+        platform.setPosition(pos);
+        // 更改平台样式
+        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
         // 添加平台
         this.node.addChild(platform);
     },
 
+    // 决定生成哪种主题的组合平台
+    spawnRandomPlatformGroup (pos, random) {
+        switch (random) {
+            case 0:
+                // 生成common主题的组合平台
+                this.spawnCommonPlatform(pos);
+                break;
+            case 1:
+                // 根据groupType生成对应主题的平台
+                switch (this.groupType) {
+                    case this.PlatformGroupType.Winter:
+                        // 生成winter主题的组合平台
+                        this.spawnWinterPlatform(pos);
+                        break;
+                    case this.PlatformGroupType.Grass:
+                        // 生成grass主题的组合平台
+                        this.spawnGrassPlatform(pos);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 2:
+                // 生成钉子平台的主题
+                this.spawnSpikePlatform(pos);
+                break;
+            default:
+                break;
+        }
+    },
+
     // 生成common主题的组合平台
-    spawnCommonPlatform () {
+    spawnCommonPlatform (pos) {
         // 从4种common组合平台种随机一种
         let random = parseInt(Math.random() * this.platformCommonPrefabs.length);
+        let prefab = this.platformCommonPrefabs[random];
 
-        let platform = cc.instantiate(this.platformCommonPrefabs[random]);
-        platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
-        
-        this.node.addChild(platform);
+        this.spawnSinglePlatform(pos, prefab);
     },
 
     // 生成winter主题的组合平台
-    spawnWinterPlatform () {
+    spawnWinterPlatform (pos) {
         let random = parseInt(Math.random() * this.platformWinterPrefabs.length);
-
-        let platform = cc.instantiate(this.platformWinterPrefabs[random]);
-        platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
+        let prefab = this.platformWinterPrefabs[random];
         
-        this.node.addChild(platform);
+        this.spawnSinglePlatform(pos, prefab);
     },
 
     // 生成grass主题的组合平台
-    spawnGrassPlatform () {
+    spawnGrassPlatform (pos) {
         let random = parseInt(Math.random() * this.platformGrassPrefabs.length);
-
-        let platform = cc.instantiate(this.platformGrassPrefabs[random]);
-        platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
-        
-        this.node.addChild(platform);
+        let prefab = this.platformGrassPrefabs[random];
+       
+        this.spawnSinglePlatform(pos, prefab);
     },
 
     // 生成钉子平台
-    spawnSpikePlatform () {
-        let platform;
+    spawnSpikePlatform (pos) {
+        let prefab = null;
         if (this.isRightSpawn) {
             // 当前向右生成，选择左边的钉子平台
-            platform =  cc.instantiate(this.platformSpikePrefabs[0]);
+            prefab = this.platformSpikePrefabs[0];
         } else {
             // 当前向左生成，选择右边的钉子平台
-            platform = cc.instantiate(this.platformSpikePrefabs[1]);
+            prefab = this.platformSpikePrefabs[1];
         }
 
-        platform.setPosition(this.spawnPosition);
-        platform.getComponent('PlatformChanger').change(cc.instantiate(this.platformPrefab).getComponent(cc.Sprite));
-        
-        this.node.addChild(platform);
+        this.spawnSinglePlatform(pos, prefab)
+
+        if (this.isRightSpawn) {
+            this.spikeSpawnPos = new cc.Vec2(this.spawnPosition.x - 3 * this.deltaX, this.spawnPosition.y + this.deltaY);
+        } else {
+            this.spikeSpawnPos = new cc.Vec2(this.spawnPosition.x + 3 * this.deltaX, this.spawnPosition.y + this.deltaY);
+        }
+
+        this.spawnSpikeDirPlatforms();
     },
 
-    getNewPosition() {
-        // 获取新平台的位置
-        let newX = this.spawnPosition.x;
-        let newY = this.spawnPosition.y;
-
-        if(this.isRightSpawn){
-            // 下一个向右生成
-            newX += this.deltaX;
-            newY += this.deltaY;
-        } else {
-            // 下一个向左生成
-            newX -= this.deltaX;
-            newY += this.deltaY;
+    // 在钉子平台方向生成平台
+    spawnSpikeDirPlatforms () {
+        for (let i = 0; i < this.spikeSpawnCount; i++) {
+            this.spawnSinglePlatform(this.spikeSpawnPos, this.platformPrefab);
+            this.spikeSpawnPos = this.getNewPosition(this.spikeSpawnPos, true);
         }
+        
+        // let random = parseInt(Math.random() * 2)
+        // this.spawnRandomPlatformGroup(this.spikeSpawnPos, random);
+    },
 
-        return new cc.Vec2(newX, newY);
+    // 获取下一个将要生成的平台的位置，第二个参数表示是否为钉子方向的生成
+    getNewPosition(pos, isSpikeSpawn) {
+        if (this.isRightSpawn) {
+            // 当前正在向右生成平台
+            if (isSpikeSpawn) {
+                // 钉子方向向右生成
+                return new cc.Vec2(pos.x - this.deltaX, pos.y + this.deltaY);
+            } else {
+                // 主路径向右生成
+                return new cc.Vec2(pos.x + this.deltaX, pos.y + this.deltaY);
+            }
+        } else {
+            // 正在向左生成
+            if (isSpikeSpawn) {
+                return new cc.Vec2(pos.x + this.deltaX, pos.y + this.deltaY);
+            } else {
+                return new cc.Vec2(pos.x - this.deltaX, pos.y + this.deltaY);
+            }
+        }
     },
 
     start () {

@@ -20,10 +20,13 @@ cc.Class({
             this.sprites[i].spriteFrame = sprite.spriteFrame;
         }
 
-        let random = parseInt(Math.random() * 2);
-        if (random == 0) {
-            // 修改障碍物位置为平台的右边（默认预制资源均为左边）
-            this.node.scale = new cc.Vec2(-1, 1);
+        if (this.node.name != 'SpikeGroupLeft' && this.node.name != 'SpikeGroupRight') {
+            // 钉子平台不进行左右随机
+            let random = parseInt(Math.random() * 2);
+            if (random == 0) {
+                // 修改障碍物位置为平台的右边（默认预制资源均为左边）
+                this.node.scale = new cc.Vec2(-1, 1);
+            }
         }
     },
 
