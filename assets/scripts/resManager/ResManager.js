@@ -42,6 +42,12 @@ cc.Class({
             default: [],
             type: [cc.Prefab]
         },
+
+        // 钻石的预制资源
+        diamondPrefab: {
+            default: null,
+            type: cc.Prefab
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:

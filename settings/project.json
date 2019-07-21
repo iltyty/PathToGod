@@ -9,12 +9,16 @@
       false,
       true,
       null,
+      true,
       true
     ],
     [
       false,
       true,
-      false
+      false,
+      null,
+      null,
+      true
     ],
     [
       false,
@@ -24,6 +28,14 @@
     ],
     [
       false,
+      true,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
       true,
       false,
       false,
@@ -50,7 +62,8 @@
     "Character",
     "Platform",
     "UI",
-    "Obstacle"
+    "Obstacle",
+    "PickUp"
   ],
   "last-module-event-record-time": 0,
   "simulator-orientation": false,

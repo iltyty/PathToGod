@@ -27,7 +27,6 @@ cc.Class({
     init (spriteFrame, fallTime) {
         this.timeLeft = fallTime;
         this.timerBegan = true;
-        console.log(this.node)
         this.gameInstance = this.node.parent.parent.getComponent('GameScene');
 
         for (let i = 0; i < this.sprites.length; i++) {
@@ -76,6 +75,11 @@ cc.Class({
                         rigid.type = cc.RigidBodyType.Dynamic;
                     }
                 }
+
+                this.scheduleOnce(function () {
+                    this.node.active = false;
+                    this.node.destroy();
+                }, 1);
             }
         }
     },

@@ -37,6 +37,15 @@ cc.Class({
             type: cc.Node,
         },
 
+        // 本局游戏吃到的钻石数
+        diamondCount: 0,
+
+        // 记录钻石数目的结点
+        diamondText: {
+            default: null,
+            type: cc.Node
+        },
+
         // 按钮点击音效
         audioClick: {
             default: null,

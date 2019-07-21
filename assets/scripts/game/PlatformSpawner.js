@@ -125,7 +125,7 @@ cc.Class({
     spawnPlatform () {
         if (this.spawnCount > 0) {
             // 生成单个平台
-            this.spawnSinglePlatform(this.spawnPosition, this.platformPool.getSinglePlatform());
+            this.spawnSinglePlatform(this.spawnPosition, this.platformPool.getSinglePlatform(), true);
         } else {
             // 随机化生成不同主题的组合平台(common, winter, grass)
             let random = parseInt(Math.random() * 3);
@@ -136,7 +136,7 @@ cc.Class({
     },
 
     // 生成单个平台
-    spawnSinglePlatform (pos, platform) {
+    spawnSinglePlatform (pos, platform, isMainPath) {
         // 显示平台
         platform.active = true;
         // 设置生成平台的位置
@@ -145,6 +145,16 @@ cc.Class({
         this.node.addChild(platform);
         // 更改平台样式
         platform.getComponent('PlatformManager').init(this.selectedSpriteFrame, this.fallTime);
+
+        let random = parseInt(Math.random() * 10);
+        if (random === 5 && this.gameInstance.moveBegan && isMainPath) {
+            // 1/10的概率生成钻石
+            let diamond = this.platformPool.getDiamond();
+            diamond.active = true;
+            diamond.setPosition(new cc.Vec2(pos.x, pos.y + 80));
+            this.node.addChild(diamond);
+            diamond.zIndex = 3;
+        }
     },
 
     // 决定生成哪种主题的组合平台
@@ -181,25 +191,25 @@ cc.Class({
     // 生成common主题的组合平台
     spawnCommonPlatform (pos) {
         let platform = this.platformPool.getCommonPlatform();
-        platform.zIndex = 999;
+        platform.zIndex = 2;
 
-        this.spawnSinglePlatform(pos, platform);
+        this.spawnSinglePlatform(pos, platform, true);
     },
 
     // 生成winter主题的组合平台
     spawnWinterPlatform (pos) {
         let platform = this.platformPool.getWinterPlatform();
-        platform.zIndex = 999;
+        platform.zIndex = 2;
 
-        this.spawnSinglePlatform(pos, platform);
+        this.spawnSinglePlatform(pos, platform, true);
     },
 
     // 生成grass主题的组合平台
     spawnGrassPlatform (pos) {
         let platform = this.platformPool.getWinterPlatform();
-        platform.zIndex = 999;
+        platform.zIndex = 2;
 
-        this.spawnSinglePlatform(pos, platform);
+        this.spawnSinglePlatform(pos, platform, true);
     },
 
     // 生成钉子平台
@@ -212,9 +222,9 @@ cc.Class({
             // 当前向左生成，选择右边的钉子平台
             platform = this.platformPool.getRightSpikePlatform();
         }
-        platform.zIndex = 999;
+        platform.zIndex = 2;
 
-        this.spawnSinglePlatform(pos, platform)
+        this.spawnSinglePlatform(pos, platform, true)
 
         if (this.isRightSpawn) {
             this.spikeSpawnPos = new cc.Vec2(this.spawnPosition.x - 3 * this.deltaX, this.spawnPosition.y + this.deltaY);
@@ -228,12 +238,9 @@ cc.Class({
     // 在钉子平台方向生成平台
     spawnSpikeDirPlatforms () {
         for (let i = 0; i < this.spikeSpawnCount; i++) {
-            this.spawnSinglePlatform(this.spikeSpawnPos, this.platformPool.getSinglePlatform());
+            this.spawnSinglePlatform(this.spikeSpawnPos, this.platformPool.getSinglePlatform(), false);
             this.spikeSpawnPos = this.getNewPosition(this.spikeSpawnPos, true);
         }
-        
-        // let random = parseInt(Math.random() * 2)
-        // this.spawnRandomPlatformGroup(this.spikeSpawnPos, random);
     },
 
     // 获取下一个将要生成的平台的位置，第二个参数表示是否为钉子方向的生成

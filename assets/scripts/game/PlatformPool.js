@@ -32,6 +32,9 @@ cc.Class({
 
         // spikeRight主题组合平台的list
         spikePlatformRightList: [],
+
+        // 钻石的list
+        diamondList: [],
     },
 
     onLoad () {
@@ -44,112 +47,163 @@ cc.Class({
         
         for (let i = 0; i < this.initSpawnCount; i++) {
             // 单个普通平台列表
-            this.addPlatform(this.resManager.singlePlatformPrefab, this.singlePlatformList);
+            this.addList(this.resManager.singlePlatformPrefab, this.singlePlatformList);
 
             // 左钉子平台列表
-            this.addPlatform(this.resManager.spikePlatformPrefabs[0], this.spikePlatformLeftList);
+            this.addList(this.resManager.spikePlatformPrefabs[0], this.spikePlatformLeftList);
             
             // 右钉子平台列表
-            this.addPlatform(this.resManager.spikePlatformPrefabs[1], this.spikePlatformRightList);
+            this.addList(this.resManager.spikePlatformPrefabs[1], this.spikePlatformRightList);
+
+            // 钻石列表
+            this.addList(this.resManager.diamondPrefab, this.diamondList);
 
             // common主题组合平台列表
             let random = parseInt(Math.random() * this.resManager.commonPlatformPrefabs.length);
-            this.addPlatform(this.resManager.commonPlatformPrefabs[random], this.commonPlatformList);
+            this.addList(this.resManager.commonPlatformPrefabs[random], this.commonPlatformList);
 
             // winter主题组合平台列表
             let random1 = parseInt(Math.random() * this.resManager.winterPlatformPrefabs.length);
-            this.addPlatform(this.resManager.winterPlatformPrefabs[random1], this.winterPlatformList);
+            this.addList(this.resManager.winterPlatformPrefabs[random1], this.winterPlatformList);
 
             // grass主题组合平台列表
             let random2 = parseInt(Math.random() * this.resManager.grassPlatformPrefabs.length);
-            this.addPlatform(this.resManager.grassPlatformPrefabs[random2], this.grassPlatformList);
+            this.addList(this.resManager.grassPlatformPrefabs[random2], this.grassPlatformList);
         }
     },
 
     // 给指定的list添加对应的实例化平台
-    addPlatform (prefab, list) {
-        let platform = cc.instantiate(prefab);
-        platform.active = false;
-        list.push(platform);
+    addList (prefab, list) {
+        let object = cc.instantiate(prefab);
+        object.active = false;
+        list.push(object);
 
-        return platform;
+        return object;
     },
 
     // 获取一个单个平台
     getSinglePlatform () {
         for (let i = 0; i < this.singlePlatformList.length; i++) {
-            if (!this.singlePlatformList[i].active) {
+            if (!this.singlePlatformList[i].activeInHierarchy) {
                 // 当前结点未被添加至场景中
-                return this.singlePlatformList[i];
+                let platform = this.singlePlatformList.shift();
+                return platform;
             }
         }
 
         // 当前平台池中所有单个平台均已被添加至场景中
         // 添加新的单个平台至平台池后返回
-        return this.addPlatform(this.resManager.singlePlatformPrefab, this.singlePlatformList);
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.singlePlatformPrefab, this.singlePlatformList);
+        }
+
+        let platform = this.singlePlatformList.shift();
+        return platform;
     },
 
     // 获取一个左钉子平台
     getLeftSpikePlatform () {
         for (let i = 0; i < this.spikePlatformLeftList.length; i++) {
-            if (!this.spikePlatformLeftList[i].active) {
-                // 当前结点未被添加至场景中
-                return this.spikePlatformLeftList[i];
+            if (!this.spikePlatformLeftList[i].activeInHierarchy) {
+                let platform = this.spikePlatformLeftList.shift();
+                return platform;
             }
         }
 
-        return this.addPlatform(this.resManager.spikePlatformPrefabs[0], this.spikePlatformLeftList);
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.spikePlatformPrefabs[0], this.spikePlatformLeftList);
+        }
+        
+        let platform = this.spikePlatformLeftList.shift();
+        return platform;
     },
 
     // 获取一个右钉子平台
     getRightSpikePlatform () {
         for (let i = 0; i < this.spikePlatformRightList.length; i++) {
-            if (!this.spikePlatformRightList[i].active) {
-                // 当前结点未被添加至场景中
-                return this.spikePlatformRightList[i];
+            if (!this.spikePlatformRightList[i].activeInHierarchy) {
+                let platform = this.spikePlatformRightList.shift();
+                return platform;
             }
         }
 
-        return this.addPlatform(this.resManager.spikePlatformPrefabs[1], this.spikePlatformRightList);
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.spikePlatformPrefabs[1], this.spikePlatformRightList);
+        }
+        
+        let platform = this.spikePlatformRightList.shift();
+        return platform;
+    },
+
+    // 获取一个钻石
+    getDiamond () {
+        for (let i = 0; i < this.diamondList.length; i++) {
+            if (!this.diamondList[i].activeInHierarchy) {
+                let diamond = this.diamondList.shift();
+                return diamond;
+            }
+        }
+
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.diamondPrefab, this.diamondList);
+        }
+        
+        let diamond = this.diamondList.shift();
+        return diamond;
     },
 
     // 获取一个随机的common主题平台
     getCommonPlatform () {
         for (let i = 0; i < this.commonPlatformList.length; i++) {
-            if (!this.commonPlatformList[i].active) {
-                // 当前结点未被添加至场景中
-                return this.commonPlatformList[i];
+            if (!this.commonPlatformList[i].activeInHierarchy) {
+                let platform = this.commonPlatformList.shift();
+                return platform;
             }
         }
 
-        let random = parseInt(Math.random() * this.resManager.commonPlatformPrefabs.length);
-        return this.addPlatform(this.resManager.commonPlatformPrefabs[random], this.commonPlatformList);
+        let random = parseInt(Math.random() * this.resManager.grassPlatformPrefabs.length);
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.commonPlatformPrefabs[random], this.commonPlatformList);
+        }
+        
+        let platform = this.commonPlatformList.shift();
+        return platform;
     },
 
     // 获取一个随机的winter主题平台
     getWinterPlatform () {
         for (let i = 0; i < this.winterPlatformList.length; i++) {
-            if (!this.winterPlatformList[i].active) {
-                // 当前结点未被添加至场景中
-                return this.winterPlatformList[i];
+            if (!this.winterPlatformList[i].activeInHierarchy) {
+                let platform = this.winterPlatformList.shift();
+                return platform;
             }
         }
 
-        let random = parseInt(Math.random() * this.resManager.winterPlatformPrefabs.length);
-        return this.addPlatform(this.resManager.winterPlatformPrefabs[random], this.winterPlatformList);
+        let random = parseInt(Math.random() * this.resManager.grassPlatformPrefabs.length);
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.winterPlatformPrefabs[random], this.winterPlatformList);
+        }
+        
+        let platform = this.winterPlatformList.shift();
+        return platform;
     },
     
     // 获取一个随机的grass主题平台
     getGrassPlatform () {
         for (let i = 0; i < this.grassPlatformList.length; i++) {
-            if (!this.grassPlatformList[i].active) {
-                // 当前结点未被添加至场景中
-                return this.grassPlatformList[i];
+            if (!this.grassPlatformList[i].activeInHierarchy) {
+                let platform = this.grassPlatformList.shift();
+                return platform;
             }
         }
 
         let random = parseInt(Math.random() * this.resManager.grassPlatformPrefabs.length);
-        return this.addPlatform(this.resManager.grassPlatformPrefabs[random], this.grassPlatformList);
+        for (let i = 0; i < this.initSpawnCount; i++) {
+            this.addList(this.resManager.grassPlatformPrefabs[random], this.grassPlatformList);
+        }
+        
+        let platform = this.grassPlatformList.shift();
+        return platform;
     },
 
     start () {

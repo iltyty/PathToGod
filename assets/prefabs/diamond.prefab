@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "normal",
+    "_name": "diamond",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -28,13 +28,10 @@
       },
       {
         "__id__": 4
-      },
-      {
-        "__id__": 5
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 5
     },
     "_opacity": 255,
     "_color": {
@@ -46,8 +43,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 138,
-      "height": 122
+      "width": 67,
+      "height": 120
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -57,7 +54,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -300,
+      "y": 100,
       "z": 0
     },
     "_scale": {
@@ -76,7 +73,7 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "groupIndex": 2,
+    "groupIndex": 5,
     "_id": ""
   },
   {
@@ -91,10 +88,10 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "492ebf72-b50f-4863-8186-d3a0147fa632"
+      "__uuid__": "9162c82c-f0a5-4cca-8588-c6aa3ff727bb"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -128,12 +125,12 @@
     "_angularVelocity": 0,
     "_fixedRotation": true,
     "enabledContactListener": true,
-    "bullet": false,
+    "bullet": true,
     "awakeOnLoad": true,
     "_id": ""
   },
   {
-    "__type__": "cc.PhysicsBoxCollider",
+    "__type__": "cc.PhysicsPolygonCollider",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -142,38 +139,37 @@
     "_enabled": true,
     "tag": 0,
     "_density": 1,
-    "_sensor": false,
+    "_sensor": true,
     "_friction": 0.2,
     "_restitution": 0,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 10,
+      "x": 0,
       "y": 0
     },
-    "_size": {
-      "__type__": "cc.Size",
-      "width": 30,
-      "height": 6
-    },
-    "_id": ""
-  },
-  {
-    "__type__": "357d2CORlhGdoFUOLPUyQDA",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "sprites": [
+    "points": [
       {
-        "__id__": 2
+        "__type__": "cc.Vec2",
+        "x": 0,
+        "y": 60
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -33.5,
+        "y": 0
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 0,
+        "y": -60
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 33.5,
+        "y": 0
       }
     ],
-    "timeLeft": 0,
-    "timerBegan": true,
-    "gameInstance": null,
     "_id": ""
   },
   {
@@ -182,9 +178,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "c2bb2c60-6315-4191-a653-79557becc70a"
+      "__uuid__": "5b3627a6-bf5e-4d05-8bea-9e690b5ade4d"
     },
-    "fileId": "b6CazT8b1LBrXD1ZvtQpgO",
+    "fileId": "f0QmcWPcFHObQgh+7OMVNj",
     "sync": false
   }
 ]

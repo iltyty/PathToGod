@@ -55,6 +55,7 @@ cc.Class({
 
         this.rigidbody = this.node.getComponent(cc.RigidBody);
         this.rigidbody.enabledContactListener = true;
+        this.rigidbody.allowSleep = false;
 
         this.gameInstance = this.node.parent.getComponent('GameScene');
 
@@ -82,6 +83,8 @@ cc.Class({
             return;
         }
 
+        this.node.dispatchEvent(new cc.Event.EventCustom('decidepath', true));
+
         if (pos.x <= cc.winSize.width / 2) {
             // 点击了左半边屏幕
             this.isHeadRight = false;
@@ -98,8 +101,6 @@ cc.Class({
             this.isJumping = true;
             this.jump();
         }
-
-        this.node.dispatchEvent( new cc.Event.EventCustom('decidepath', true) );
     },
 
     // 得到人物的下一个坐标
@@ -114,7 +115,11 @@ cc.Class({
     },
 
     onBeginContact: function (contact, selfCollider, otherCollider) {
+        if (selfCollider.node.group !== 'Character') {
+            return;
+        }
         if (otherCollider.node.group === 'Platform') {
+            // 落至平台
             let platPos = otherCollider.node.getPosition();
 
             this.isJumping = false;
@@ -128,7 +133,13 @@ cc.Class({
                 this.lastHitPlatform = otherCollider;
             }
         } else if (otherCollider.node.group === 'Obstacle') {
+            // 碰到障碍物，游戏结束
             this.node.active = false;
+        } else if (otherCollider.node.group === 'PickUp') {
+            // 吃到钻石
+            otherCollider.node.active = false;
+            this.gameInstance.diamondCount++;
+            this.gameInstance.diamondText.getComponent(cc.RichText).string = this.gameInstance.diamondCount.toString();
         }
     },
 
@@ -140,11 +151,15 @@ cc.Class({
         if (this.rigidbody.linearVelocity.y < -200) {
             // 人物正在下落，判断是否跳跃至平台
             if (!this.isFallingTowardsPlatform() && !this.gameInstance.gameOver) {
-                // 没有落到平台
+                // 没有落到平台，游戏结束
                this.node.zIndex = -1;
                this.node.getComponent(cc.PhysicsCircleCollider).enabled = false;
                this.gameInstance.gameOver = true;
             }
+        }
+
+        if (this.node.parent.getChildByName('camera').position.y - this.node.position.y > 200) {
+            this.gameInstance.gameOver = true;
         }
     },
 
