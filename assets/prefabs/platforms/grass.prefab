@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "normal",
+    "_name": "grass",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -117,7 +117,7 @@
     "_enabled": true,
     "_type": 0,
     "_allowSleep": true,
-    "_gravityScale": 1,
+    "_gravityScale": 5,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -171,6 +171,8 @@
         "__id__": 2
       }
     ],
+    "timeLeft": 0,
+    "timerBegan": true,
     "_id": ""
   },
   {

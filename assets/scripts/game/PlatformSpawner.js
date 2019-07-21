@@ -51,13 +51,27 @@ cc.Class({
         resManager: null,
 
         // 平台对象池
-        platformPool: null
+        platformPool: null,
+
+        // 游戏场景
+        gameInstance: null,
+
+        // 每个平台被添加之后的默认掉落时间
+        fallTime: 3,
+
+        // 平台最小的掉落时间
+        minFallTime: 0.5,
+
+        // 里程碑分数，每次玩家超过这个分数后平台掉落时间都会减少一个系数
+        milestoneScore: 10,
+
+        // 掉落时间的衰减系数
+        dampingFactor: 0.9,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-
         cc.director.getPhysicsManager().enabled = true;
         
         cc.director.getCollisionManager().enabled = true;
@@ -69,6 +83,7 @@ cc.Class({
         });
         this.resManager = this.node.parent.getChildByName('resManager').getComponent('ResManager');
         this.platformPool = this.node.parent.getChildByName('platformPool').getComponent('PlatformPool');
+        this.gameInstance = this.node.parent.getComponent('GameScene');
 
         this.randomPlatformTheme();
 
@@ -126,10 +141,10 @@ cc.Class({
         platform.active = true;
         // 设置生成平台的位置
         platform.setPosition(pos);
-        // 更改平台样式
-        platform.getComponent('PlatformChanger').change(this.selectedSpriteFrame);
         // 添加平台
         this.node.addChild(platform);
+        // 更改平台样式
+        platform.getComponent('PlatformManager').init(this.selectedSpriteFrame, this.fallTime);
     },
 
     // 决定生成哪种主题的组合平台
@@ -246,5 +261,20 @@ cc.Class({
 
     },
 
-    update (dt) {},
+    update (dt) {
+        // 更新平台掉落时间
+        this.updateFallTime();
+    },
+
+    updateFallTime () {
+        if (this.gameInstance.score > this.milestoneScore) {
+            // 玩家分数超过了里程碑分数，更新掉落时间时间
+            this.milestoneScore *= 2;
+            this.fallTime *= this.dampingFactor;
+
+            if (this.fallTime < this.minFallTime) {
+                this.fallTime = this.minFallTime;
+            }
+        }
+    }
 });

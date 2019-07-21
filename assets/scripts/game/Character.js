@@ -34,11 +34,21 @@ cc.Class({
             default: null,
             type: cc.RigidBody
         },
+
+        // GameScene脚本
+        gameInstance: null,
+
+        // 上一次碰撞的平台，用于分数增加时的判断
+        lastHitPlatform: {
+            default: null,
+            type: cc.PhysicsBoxCollider
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+
         this.currentPos = this.initPos;
 
         this.node.parent.on('touchend', this.onMouseDown, this);
@@ -46,16 +56,31 @@ cc.Class({
         this.rigidbody = this.node.getComponent(cc.RigidBody);
         this.rigidbody.enabledContactListener = true;
 
-        cc.director.getPhysicsManager().enabled = true;
-        cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_shapeBit;
+        this.gameInstance = this.node.parent.getComponent('GameScene');
 
-        let collisionManager = cc.director.getCollisionManager();
-        collisionManager.enabled = true;
+        cc.director.getPhysicsManager().enabled = true;
+        cc.director.getCollisionManager().enabled = true;
+
+        cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit |
+        cc.PhysicsManager.DrawBits.e_pairBit |
+        cc.PhysicsManager.DrawBits.e_centerOfMassBit |
+        cc.PhysicsManager.DrawBits.e_jointBit |
+        cc.PhysicsManager.DrawBits.e_shapeBit
+        ;
     },
 
     // 屏幕点击响应函数
     onMouseDown(event) {
         let pos = event.getLocation();
+
+        if (this.gameInstance.gamePaused) {
+            return;
+        }
+
+        if (new cc.Rect(this.gameInstance.btnPause.getBoundingBoxToWorld()).contains(pos) || 
+            new cc.Rect(this.gameInstance.btnPlay.getBoundingBoxToWorld()).contains(pos)) {
+            return;
+        }
 
         if (pos.x <= cc.winSize.width / 2) {
             // 点击了左半边屏幕
@@ -67,6 +92,9 @@ cc.Class({
         }
 
         if (!this.isJumping) {
+            if (!this.gameInstance.moveBegan) {
+                this.gameInstance.moveBegan = true;
+            }
             this.isJumping = true;
             this.jump();
         }
@@ -86,11 +114,22 @@ cc.Class({
     },
 
     onBeginContact: function (contact, selfCollider, otherCollider) {
-        this.isJumping = false;
-        let platPos = otherCollider.node.getPosition();
-        this.nextPosLeft = new cc.Vec2(platPos.x - this.deltaX, platPos.y + this.deltaY);
-        this.nextPosRight = new cc.Vec2(platPos.x + this.deltaX, platPos.y + this.deltaY);
-        this.rigidbody.linearVelocity = new cc.Vec2();
+        if (otherCollider.node.group === 'Platform') {
+            let platPos = otherCollider.node.getPosition();
+
+            this.isJumping = false;
+
+            this.nextPosLeft = new cc.Vec2(platPos.x - this.deltaX, platPos.y + this.deltaY);
+            this.nextPosRight = new cc.Vec2(platPos.x + this.deltaX, platPos.y + this.deltaY);
+        
+            if (this.lastHitPlatform !== otherCollider){
+                this.gameInstance.score++;
+                this.gameInstance.scoreText.getComponent(cc.RichText).string = this.gameInstance.score.toString();
+                this.lastHitPlatform = otherCollider;
+            }
+        } else if (otherCollider.node.group === 'Obstacle') {
+            this.node.active = false;
+        }
     },
 
     start () {
@@ -98,19 +137,45 @@ cc.Class({
     },
 
     update (dt) {
+        if (this.rigidbody.linearVelocity.y < -200) {
+            // 人物正在下落，判断是否跳跃至平台
+            if (!this.isFallingTowardsPlatform() && !this.gameInstance.gameOver) {
+                // 没有落到平台
+               this.node.zIndex = -1;
+               this.node.getComponent(cc.PhysicsCircleCollider).enabled = false;
+               this.gameInstance.gameOver = true;
+            }
+        }
+    },
 
+    isFallingTowardsPlatform () {
+        // 判断此次跳跃有没有跳至平台上
+        // 利用人物的刚体射线检测判断下方有没有平台
+        let p = this.node.parent.convertToWorldSpaceAR(this.node.position);
+        let p1 = new cc.Vec2(p.x + 15, p.y);
+        let p2 = new cc.Vec2(p1.x, p1.y - 100);
+        
+        let rayCastResult = cc.director.getPhysicsManager().rayCast(p1, p2, cc.RayCastType.All);
+        if (rayCastResult.length !== 0){
+            if (rayCastResult[0].collider.node.group !== 'Platform') {
+                // 没有跳至平台
+                return false;
+            } else {
+                return true;
+            }
+        }
     },
 
     jump () {
         // 人物跳跃函数
         if (this.isHeadRight) {
             // 向右跳
-            this.node.runAction(cc.moveTo(0.05, this.nextPosRight.x, this.nextPosRight.y + 85));
-            this.rigidbody.linearVelocity = new cc.Vec2(0, -300)
+            //this.node.runAction(cc.moveTo(0.05, this.nextPosRight.x, this.node.position.y));
+            this.node.runAction(cc.moveBy(0.05, this.nextPosRight.x - this.node.position.x, 0))
+            this.node.runAction(cc.moveBy(0.05, 0, this.nextPosRight.y - this.node.position.y + 85))
         } else {
             // 向左跳
             this.node.runAction(cc.moveTo(0.05, this.nextPosLeft.x, this.nextPosLeft.y + 85));
-            this.rigidbody.linearVelocity = new cc.Vec2(0, -300)
         }
     }
 });

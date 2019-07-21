@@ -7,6 +7,8 @@
     [
       false,
       false,
+      true,
+      null,
       true
     ],
     [
@@ -16,6 +18,13 @@
     ],
     [
       false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
       false,
       false,
       false
@@ -40,7 +49,8 @@
     "default",
     "Character",
     "Platform",
-    "UI"
+    "UI",
+    "Obstacle"
   ],
   "last-module-event-record-time": 0,
   "simulator-orientation": false,
