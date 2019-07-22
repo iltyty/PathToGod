@@ -77,7 +77,6 @@ cc.Class({
                 }
 
                 this.scheduleOnce(function () {
-                    this.node.active = false;
                     this.node.destroy();
                 }, 1);
             }

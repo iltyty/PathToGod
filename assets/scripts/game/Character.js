@@ -41,7 +41,7 @@ cc.Class({
         // 上一次碰撞的平台，用于分数增加时的判断
         lastHitPlatform: {
             default: null,
-            type: cc.PhysicsBoxCollider
+            type: cc.Node
         }
     },
 
@@ -83,8 +83,6 @@ cc.Class({
             return;
         }
 
-        this.node.dispatchEvent(new cc.Event.EventCustom('decidepath', true));
-
         if (pos.x <= cc.winSize.width / 2) {
             // 点击了左半边屏幕
             this.isHeadRight = false;
@@ -98,39 +96,34 @@ cc.Class({
             if (!this.gameInstance.moveBegan) {
                 this.gameInstance.moveBegan = true;
             }
+            this.node.dispatchEvent(new cc.Event.EventCustom('decidepath', true));
             this.isJumping = true;
             this.jump();
-        }
-    },
-
-    // 得到人物的下一个坐标
-    getNewPosition (platform) {
-        if (this.isHeadRight) {
-            // 下一次向右跳跃
-            return new cc.Vec2(platform.getPosition().x + this.deltaX, platform.getPosition().y + this.deltaY);
-        } else {
-            // 下一次向左跳跃
-            return new cc.Vec2(platform.getPosition().x - this.deltaX, platform.getPosition().y + this.deltaY);
         }
     },
 
     onBeginContact: function (contact, selfCollider, otherCollider) {
         if (selfCollider.node.group !== 'Character') {
             return;
-        }
+        }      
         if (otherCollider.node.group === 'Platform') {
             // 落至平台
-            let platPos = otherCollider.node.getPosition();
+            let platPos = otherCollider.node.position;
+
+            if (otherCollider.node.name === 'platform') {
+                // 与组合平台相碰
+                platPos = otherCollider.node.parent.position;
+            }
 
             this.isJumping = false;
 
             this.nextPosLeft = new cc.Vec2(platPos.x - this.deltaX, platPos.y + this.deltaY);
             this.nextPosRight = new cc.Vec2(platPos.x + this.deltaX, platPos.y + this.deltaY);
         
-            if (this.lastHitPlatform !== otherCollider){
+            if (this.lastHitPlatform !== otherCollider.node){
                 this.gameInstance.score++;
                 this.gameInstance.scoreText.getComponent(cc.RichText).string = this.gameInstance.score.toString();
-                this.lastHitPlatform = otherCollider;
+                this.lastHitPlatform = otherCollider.node;
             }
         } else if (otherCollider.node.group === 'Obstacle') {
             // 碰到障碍物，游戏结束
@@ -185,12 +178,12 @@ cc.Class({
         // 人物跳跃函数
         if (this.isHeadRight) {
             // 向右跳
-            //this.node.runAction(cc.moveTo(0.05, this.nextPosRight.x, this.node.position.y));
             this.node.runAction(cc.moveBy(0.05, this.nextPosRight.x - this.node.position.x, 0))
             this.node.runAction(cc.moveBy(0.05, 0, this.nextPosRight.y - this.node.position.y + 85))
         } else {
             // 向左跳
-            this.node.runAction(cc.moveTo(0.05, this.nextPosLeft.x, this.nextPosLeft.y + 85));
+            this.node.runAction(cc.moveBy(0.05, this.nextPosLeft.x - this.node.position.x, 0));
+            this.node.runAction(cc.moveBy(0.05, 0, this.nextPosLeft.y - this.node.position.y + 85));
         }
     }
 });
