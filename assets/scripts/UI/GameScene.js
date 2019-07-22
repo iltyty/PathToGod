@@ -56,8 +56,6 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        this.btnPause = this.node.getChildByName('btnPause');
-        this.btnPlay = this.node.getChildByName('btnPlay');
 
         this.loadRandomBg();
         this.addBtnEvents();

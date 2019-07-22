@@ -47,6 +47,18 @@ cc.Class({
         diamondPrefab: {
             default: null,
             type: cc.Prefab
+        },
+
+        // 所有皮肤的预制资源
+        skinPrefabs: {
+            default: [],
+            type: [cc.Prefab]
+        },
+
+        // 所有皮肤的名字
+        skinNames: {
+            default: [],
+            type: [cc.String]
         }
     },
 
