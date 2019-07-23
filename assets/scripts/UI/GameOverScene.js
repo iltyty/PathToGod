@@ -1,3 +1,5 @@
+var dataManager = require('DataManager');
+
 cc.Class({
     extends: cc.Component,
 
@@ -65,8 +67,8 @@ cc.Class({
 
     setText () {
         // 设置本局游戏分数和钻石数并显示
-        this.scoreText.getComponent(cc.RichText).string = scoreNumber.toString();
-        this.diamondText.getComponent(cc.RichText).string = '+' + diamondNumber.toString();
+        this.scoreText.getComponent(cc.RichText).string = dataManager.instance.singleGameScore.toString();
+        this.diamondText.getComponent(cc.RichText).string = '+' + dataManager.instance.singleGameDiamond.toString();
     },
 
     start () {

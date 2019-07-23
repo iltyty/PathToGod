@@ -35,8 +35,11 @@ cc.Class({
             type: cc.RigidBody
         },
 
-        // GameScene脚本
+        // GameLogicManager，游戏逻辑管理类
         gameInstance: null,
+
+        // GameScene脚本
+        gameScene: null,
 
         // 上一次碰撞的平台，用于分数增加时的判断
         lastHitPlatform: {
@@ -48,7 +51,6 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-
         this.currentPos = this.initPos;
 
         this.node.parent.on('touchend', this.onMouseDown, this);
@@ -57,17 +59,11 @@ cc.Class({
         this.rigidbody.enabledContactListener = true;
         this.rigidbody.allowSleep = false;
 
-        this.gameInstance = this.node.parent.getComponent('GameScene');
+        this.gameInstance = cc.find('Canvas/gameLogicManager').getComponent('GameLogicManager');
+        this.gameScene = cc.find('Canvas').getComponent('GameScene');
 
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getCollisionManager().enabled = true;
-
-        cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit |
-        cc.PhysicsManager.DrawBits.e_pairBit |
-        cc.PhysicsManager.DrawBits.e_centerOfMassBit |
-        cc.PhysicsManager.DrawBits.e_jointBit |
-        cc.PhysicsManager.DrawBits.e_shapeBit
-        ;
     },
 
     // 屏幕点击响应函数
@@ -78,8 +74,8 @@ cc.Class({
             return;
         }
 
-        if (new cc.Rect(this.gameInstance.btnPause.getBoundingBoxToWorld()).contains(pos) || 
-            new cc.Rect(this.gameInstance.btnPlay.getBoundingBoxToWorld()).contains(pos)) {
+        if (new cc.Rect(this.gameScene.btnPause.getBoundingBoxToWorld()).contains(pos) || 
+            new cc.Rect(this.gameScene.btnPlay.getBoundingBoxToWorld()).contains(pos)) {
             return;
         }
 
@@ -122,22 +118,21 @@ cc.Class({
         
             if (this.lastHitPlatform !== otherCollider.node){
                 this.gameInstance.score++;
-                this.gameInstance.scoreText.getComponent(cc.RichText).string = this.gameInstance.score.toString();
+                this.gameInstance.refreshUI();
                 this.lastHitPlatform = otherCollider.node;
             }
         } else if (otherCollider.node.group === 'Obstacle') {
             // 碰到障碍物，游戏结束
             this.node.active = false;
             this.gameInstance.gameOver = true;
-            this.setGlobalValue();
             this.scheduleOnce(function () {
-                cc.director.loadScene('GameOverScene');
+                this.gameInstance.toGameOverScene();
             }, 1);
         } else if (otherCollider.node.group === 'PickUp') {
             // 吃到钻石
             otherCollider.node.active = false;
             this.gameInstance.diamondCount++;
-            this.gameInstance.diamondText.getComponent(cc.RichText).string = this.gameInstance.diamondCount.toString();
+            this.gameInstance.refreshUI();
         }
     },
 
@@ -153,18 +148,16 @@ cc.Class({
                 this.node.zIndex = -1;
                 this.node.getComponent(cc.PhysicsCircleCollider).enabled = false;
                 this.gameInstance.gameOver = true;
-                this.setGlobalValue();
                 this.scheduleOnce(function () {
-                    cc.director.loadScene('GameOverScene');
+                    this.gameInstance.toGameOverScene();
                 }, 1); 
             }
         }
 
         if (this.node.parent.getChildByName('camera').position.y - this.node.position.y > 200) {
             this.gameInstance.gameOver = true;
-            this.setGlobalValue();
             this.scheduleOnce(function () {
-                cc.director.loadScene('GameOverScene');
+                this.gameInstance.toGameOverScene();
             }, 1);
         }
     },

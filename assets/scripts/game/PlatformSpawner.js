@@ -53,7 +53,7 @@ cc.Class({
         // 平台对象池
         platformPool: null,
 
-        // 游戏场景
+        // GameLogicManager脚本
         gameInstance: null,
 
         // 每个平台被添加之后的默认掉落时间
@@ -83,7 +83,7 @@ cc.Class({
         });
         this.resManager = this.node.parent.getChildByName('resManager').getComponent('ResManager');
         this.platformPool = this.node.parent.getChildByName('platformPool').getComponent('PlatformPool');
-        this.gameInstance = this.node.parent.getComponent('GameScene');
+        this.gameInstance = cc.find('Canvas/gameLogicManager').getComponent('GameLogicManager');
 
         this.randomPlatformTheme();
 
@@ -270,18 +270,18 @@ cc.Class({
 
     update (dt) {
         // 更新平台掉落时间
-        this.updateFallTime();
+        if (this.gameInstance.score > this.milestoneScore) {
+            this.updateFallTime();
+        }
     },
 
     updateFallTime () {
-        if (this.gameInstance.score > this.milestoneScore) {
-            // 玩家分数超过了里程碑分数，更新掉落时间时间
-            this.milestoneScore *= 2;
-            this.fallTime *= this.dampingFactor;
+        // 玩家分数超过了里程碑分数，更新掉落时间时间
+        this.milestoneScore *= 2;
+        this.fallTime *= this.dampingFactor;
 
-            if (this.fallTime < this.minFallTime) {
-                this.fallTime = this.minFallTime;
-            }
+        if (this.fallTime < this.minFallTime) {
+            this.fallTime = this.minFallTime;
         }
     }
 });

@@ -27,13 +27,13 @@ cc.Class({
     init (spriteFrame, fallTime) {
         this.timeLeft = fallTime;
         this.timerBegan = true;
-        this.gameInstance = this.node.parent.parent.getComponent('GameScene');
+        this.gameInstance = cc.find('Canvas/gameLogicManager').getComponent('GameLogicManager');
 
         for (let i = 0; i < this.sprites.length; i++) {
             this.sprites[i].spriteFrame = spriteFrame;
         }
 
-        if (this.node.name != 'SpikeGroupLeft' && this.node.name != 'SpikeGroupRight') {
+        if (this.node.name !== 'SpikeGroupLeft' && this.node.name !== 'SpikeGroupRight') {
             // 钉子平台不进行左右随机
             let random = parseInt(Math.random() * 2);
             if (random == 0) {

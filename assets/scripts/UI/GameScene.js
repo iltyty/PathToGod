@@ -7,15 +7,6 @@ cc.Class({
             type: [cc.SpriteFrame]
         },
 
-        // 游戏是否结束
-        gameOver: false,
-
-        // 游戏是否暂停
-        gamePaused: false,
-
-        // 人物是否开始移动
-        moveBegan: false,
-
         // 暂停按钮
         btnPause: {
             default: null,
@@ -28,17 +19,11 @@ cc.Class({
             type: cc.Node
         },
 
-        // 当前分数
-        score: -1,
-
         // 显示分数的RichText
         scoreText: {
             default: null,
             type: cc.Node,
         },
-
-        // 本局游戏吃到的钻石数
-        diamondCount: 0,
 
         // 记录钻石数目的结点
         diamondText: {
@@ -55,14 +40,12 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad() {
-
+    onLoad () {
         this.loadRandomBg();
         this.addBtnEvents();
-
     },
 
-    loadRandomBg() {
+    loadRandomBg () {
         // 加载一张随机的背景图片
         let index = parseInt(Math.random() * 4);
         
@@ -87,9 +70,9 @@ cc.Class({
         }, this);
     },
 
-    start() {
+    start () {
 
     },
 
-    update (dt) {},
+    // update (dt) {},
 });
