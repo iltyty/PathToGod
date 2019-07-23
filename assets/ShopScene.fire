@@ -803,7 +803,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "87wJaKdbBNOpX8S9VrrvHr"
+    "_id": "43rvidLdtBXYvpMyIrZrrM"
   },
   {
     "__type__": "cc.Label",
@@ -831,7 +831,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "1awBWsMeZNsoxQukFmg/GZ"
+    "_id": "abf13/Nv1MlLgNkGjNOfPB"
   },
   {
     "__type__": "cc.RichText",
@@ -976,7 +976,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "a7hyjmsl5EqIgIPenmpj4K"
+    "_id": "65fWl16nhFYLIiskRwbc4n"
   },
   {
     "__type__": "cc.Label",
@@ -1004,7 +1004,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "26QHoM2rZKPqrR3fYh1Eiq"
+    "_id": "c7ChmwxcVOQ5Ae5QTCNJnk"
   },
   {
     "__type__": "cc.RichText",
@@ -1319,7 +1319,7 @@
     "vertical": false,
     "inertia": false,
     "brake": 0.9,
-    "elastic": true,
+    "elastic": false,
     "bounceDuration": 0.23,
     "scrollEvents": [],
     "cancelInnerEvents": false,
@@ -1569,7 +1569,7 @@
         "__id__": 38
       }
     ],
-    "_active": false,
+    "_active": true,
     "_level": 1,
     "_components": [],
     "_prefab": null,
@@ -1814,7 +1814,7 @@
         "__id__": 45
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 1,
     "_components": [],
     "_prefab": null,
@@ -1954,7 +1954,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "diamond",
+    "_name": "diamondImage",
     "_objFlags": 0,
     "_parent": {
       "__id__": 40
@@ -2043,7 +2043,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "diamondText",
+    "_name": "price",
     "_objFlags": 0,
     "_parent": {
       "__id__": 40
@@ -2071,7 +2071,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.84,
+      "width": 67.38,
       "height": 63
     },
     "_anchorPoint": {
@@ -2132,7 +2132,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.84,
+      "width": 67.38,
       "height": 63
     },
     "_anchorPoint": {
@@ -2142,8 +2142,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -44.92,
-      "y": -31.5,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_scale": {
@@ -2164,7 +2164,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "80ymYKw1ZFvpcsJ9Qbp9dY"
+    "_id": "e2NWBapdFHB5wdT6m2kelI"
   },
   {
     "__type__": "cc.Label",
@@ -2178,7 +2178,7 @@
     "_useOriginalSize": true,
     "_string": "20",
     "_N$string": "20",
-    "_fontSize": 80,
+    "_fontSize": 60,
     "_lineHeight": 50,
     "_enableWrapText": true,
     "_N$file": {
@@ -2192,7 +2192,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "30PhV3iChGUaLtFtdWUPJq"
+    "_id": "937DqYlHNJbqEgCM40a71f"
   },
   {
     "__type__": "cc.RichText",
@@ -2206,7 +2206,7 @@
     "_isSystemFontUsed": false,
     "_N$string": "20",
     "_N$horizontalAlign": 0,
-    "_N$fontSize": 80,
+    "_N$fontSize": 60,
     "_N$font": {
       "__uuid__": "99dbbfa4-0c02-4899-a5e2-d45743e8ab6e"
     },
@@ -2310,6 +2310,12 @@
       "霍比特人",
       "小僵尸"
     ],
+    "skinPrices": [
+      20,
+      1,
+      200,
+      300
+    ],
     "_id": "4bOLqrQNpDbYUDh2+oLd1h"
   },
   {
@@ -2352,6 +2358,7 @@
     "contentNode": {
       "__id__": 29
     },
+    "skinIndex": 0,
     "skinName": {
       "__id__": 18
     },

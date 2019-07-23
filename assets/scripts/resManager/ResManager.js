@@ -59,6 +59,12 @@ cc.Class({
         skinNames: {
             default: [],
             type: [cc.String]
+        },
+
+        // 所有皮肤对应的价格
+        skinPrices: {
+            default: [],
+            type: [cc.Integer]
         }
     },
 
