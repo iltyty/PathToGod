@@ -51,8 +51,34 @@ cc.Class({
         dataManager.instance.singleGameDiamond = this.diamondCount;
         
         dataManager.instance.diamondTotal += this.diamondCount;
-        dataManager.instance.saveScoreAndDiamond();
 
+        this.updateBestScoreArr();
+
+        dataManager.instance.saveDataToMemory();
         cc.director.loadScene('GameOverScene');
+    },
+
+    // 将本局得分存储
+    updateBestScoreArr () {
+        // 若此局分数大于前三名，则更新排行榜数据
+        let bestArr = dataManager.instance.bestScores;
+        
+        if (bestArr.indexOf(this.score) >= 0) {
+            // 已经有相同的分数，直接返回
+            return;
+        }
+
+        bestArr.push(this.score);
+        bestArr.sort(function (a, b) {
+            return b - a;
+        });
+        bestArr.pop();
+
+        if (this.score === bestArr[0]) {
+            // 为新的最高分
+            dataManager.instance.isNewBest = true;
+        } else {
+            dataManager.instance.isNewBest = false;
+        }
     }
 });

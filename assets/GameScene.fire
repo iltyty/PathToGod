@@ -726,7 +726,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "0bg54wiWxLx45p5Z9N8rzn"
+    "_id": "fdN7pOiK9PAYLogqNel4qd"
   },
   {
     "__type__": "cc.Label",
@@ -752,7 +752,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "d5iuMoJypP84gAJZSUsPJu"
+    "_id": "08GQLWq9dH85Ocnb++/KE0"
   },
   {
     "__type__": "cc.RichText",
@@ -897,7 +897,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "4dj4Z7uNJGua5a7CjUde8b"
+    "_id": "bbKm18XmJN95zE52apzlZW"
   },
   {
     "__type__": "cc.Label",
@@ -925,7 +925,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "684FeYdDRAvI9ZM7l/aOIu"
+    "_id": "bajHe7oEJLib5DG5LEeFUG"
   },
   {
     "__type__": "cc.RichText",
@@ -1077,8 +1077,43 @@
     "diamondPrefab": {
       "__uuid__": "5b3627a6-bf5e-4d05-8bea-9e690b5ade4d"
     },
-    "skinPrefabs": [],
+    "skinPrefabs": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "skinSpriteFrames": [
+      {
+        "__uuid__": "23bc237b-c727-42df-952a-d1a55f58ab13"
+      },
+      {
+        "__uuid__": "0c5da382-6aeb-4921-a506-1a5585de405e"
+      },
+      {
+        "__uuid__": "eb898e5d-6ac8-440a-b908-3e74f431cfae"
+      },
+      {
+        "__uuid__": "f9444f97-21ae-4481-a3b7-197d87355546"
+      }
+    ],
     "skinNames": [],
+    "skinPrices": [],
+    "buttonClip": {
+      "__uuid__": "b02fc343-a261-494e-a9b1-14ee1af02e6b"
+    },
+    "diamondClip": {
+      "__uuid__": "d32f604a-0d3b-40f3-9003-ec7730597d1f"
+    },
+    "fallClip": {
+      "__uuid__": "d1fd5845-a3d7-419b-a4b3-1c9ae9bce66e"
+    },
+    "hitClip": {
+      "__uuid__": "26eedb1f-e783-4a65-a865-d1165eb2da32"
+    },
+    "jumpClip": {
+      "__uuid__": "cf57ed03-e07f-4da7-aad2-27ac707ef947"
+    },
     "_id": "c4aKU7b5JEd6p6bPTanoYR"
   },
   {
@@ -1496,6 +1531,7 @@
     "rigidbody": null,
     "gameInstance": null,
     "gameScene": null,
+    "resManager": null,
     "lastHitPlatform": null,
     "_id": "ffay2FZaxILI+aPjMxHR/M"
   },
@@ -1627,6 +1663,9 @@
     "gameOver": false,
     "gamePaused": false,
     "moveBegan": false,
+    "gameScene": null,
+    "score": -1,
+    "diamondCount": 0,
     "_id": "b08Ksn5BxDMb0dKksnD9qH"
   },
   {
@@ -1683,6 +1722,8 @@
     "audioClick": {
       "__uuid__": "b02fc343-a261-494e-a9b1-14ee1af02e6b"
     },
+    "gameInstance": null,
+    "resManager": null,
     "_id": "50hs5NiYVJJ6FlnBEdGHsd"
   }
 ]

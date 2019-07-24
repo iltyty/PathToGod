@@ -19,6 +19,12 @@ cc.Class({
             type: cc.Node
         },
 
+        // 新的最高分时显示new
+        newNode: {
+            default: null,
+            type: cc.Node
+        },
+
         // 本局吃到的钻石数显示
         diamondText: {
             default: null,
@@ -47,8 +53,13 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        dataManager.instance.getDataFromMemory();
+
+        console.log(dataManager.instance.bestScores);
+        
+
         this.addBtnEvents();
-        this.setText();
+        this.setUI();
     },
 
     addBtnEvents () {
@@ -65,10 +76,19 @@ cc.Class({
         }, this);
     },
 
-    setText () {
+    setUI () {
         // 设置本局游戏分数和钻石数并显示
-        this.scoreText.getComponent(cc.RichText).string = dataManager.instance.singleGameScore.toString();
-        this.diamondText.getComponent(cc.RichText).string = '+' + dataManager.instance.singleGameDiamond.toString();
+        let singleScore = dataManager.instance.singleGameScore;
+        let singleDiamond = dataManager.instance.singleGameDiamond;
+        let theBestScore = dataManager.instance.bestScores[0];
+
+        if (dataManager.instance.isNewBest) {
+            this.newNode.active = true;
+        }
+
+        this.scoreText.getComponent(cc.RichText).string = singleScore.toString();
+        this.diamondText.getComponent(cc.RichText).string = '+' + singleDiamond.toString();
+        this.bestScoreText.getComponent(cc.RichText).string = '最高分：' + theBestScore.toString();
     },
 
     start () {

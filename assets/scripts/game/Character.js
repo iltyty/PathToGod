@@ -1,3 +1,5 @@
+var dataManager = require('DataManager');
+
 cc.Class({
     extends: cc.Component,
 
@@ -41,6 +43,9 @@ cc.Class({
         // GameScene脚本
         gameScene: null,
 
+        // 游戏资源管理脚本
+        resManager: null,
+
         // 上一次碰撞的平台，用于分数增加时的判断
         lastHitPlatform: {
             default: null,
@@ -52,6 +57,9 @@ cc.Class({
 
     onLoad() {
         this.currentPos = this.initPos;
+        this.resManager = cc.find('Canvas/resManager').getComponent('ResManager');
+
+        this.node.getComponent(cc.Sprite).spriteFrame = this.resManager.skinSpriteFrames[dataManager.instance.skinChosen];
 
         this.node.parent.on('touchend', this.onMouseDown, this);
 
@@ -123,6 +131,7 @@ cc.Class({
             }
         } else if (otherCollider.node.group === 'Obstacle') {
             // 碰到障碍物，游戏结束
+            cc.audioEngine.playEffect(this.resManager.hitClip, false);
             this.node.active = false;
             this.gameInstance.gameOver = true;
             this.scheduleOnce(function () {
@@ -130,6 +139,7 @@ cc.Class({
             }, 1);
         } else if (otherCollider.node.group === 'PickUp') {
             // 吃到钻石
+            cc.audioEngine.playEffect(this.resManager.diamondClip, false);
             otherCollider.node.active = false;
             this.gameInstance.diamondCount++;
             this.gameInstance.refreshUI();
@@ -155,6 +165,7 @@ cc.Class({
         }
 
         if (this.node.parent.getChildByName('camera').position.y - this.node.position.y > 200) {
+            cc.audioEngine.playEffect(this.resManager.fallClip, false);
             this.gameInstance.gameOver = true;
             this.scheduleOnce(function () {
                 this.gameInstance.toGameOverScene();
@@ -181,6 +192,7 @@ cc.Class({
     },
 
     jump () {
+        cc.audioEngine.playEffect(this.resManager.jumpClip, false); 
         // 人物跳跃函数
         if (this.isHeadRight) {
             // 向右跳
@@ -192,10 +204,4 @@ cc.Class({
             this.node.runAction(cc.moveBy(0.05, 0, this.nextPosLeft.y - this.node.position.y + 85));
         }
     },
-
-    setGlobalValue () {
-        // 进入游戏结束场景之前设置全局变量scoreCount和diamondCount的值
-        scoreNumber = this.gameInstance.score;
-        diamondNumber = this.gameInstance.diamondCount;
-    }
 });

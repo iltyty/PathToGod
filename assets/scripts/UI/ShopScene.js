@@ -34,6 +34,12 @@ cc.Class({
             type: cc.Node
         },
 
+        // 钻石不足时的提示信息的结点
+        infoNode: {
+            default: null,
+            type: cc.Node
+        },
+
         // 当前正在浏览的皮肤的索引
         skinIndex: 0,
 
@@ -58,19 +64,28 @@ cc.Class({
 
         this.addSkins();
         this.addBtnEvents();
+        this.setContentPos();
     },
 
     addBtnEvents () {
         this.btnBack.on('touchend', function (event) {
+            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
             cc.director.loadScene('StartScene');
         }, this);
 
         this.btnBuy.on('touchend', function (event) {
+            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
             this.onBtnBuyTouchend();
         }, this);
 
+        this.btnSelect.on('touchend', function (event) {
+            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.onBtnSelectTouchend();
+        }, this);
+
         cc.find('Canvas/scrollRect').on('scroll-ended', function (event) {
-            this.refresh();
+            let index = Math.round((this.contentNode.position.x + 360) / (-285));
+            this.refresh(index);
         }, this); 
     },
 
@@ -122,6 +137,12 @@ cc.Class({
             }
         }
     },
+ 
+    // 选择皮肤按钮点击事件处理函数
+    onBtnSelectTouchend () {
+        dataManager.instance.skinChosen = this.skinIndex;
+        dataManager.instance.saveDataToMemory();
+    },
 
     // 购买皮肤按钮点击事件处理函数
     onBtnBuyTouchend () {
@@ -129,13 +150,21 @@ cc.Class({
 
         if (price > dataManager.instance.diamondTotal) {
             // 钻石不足，无法购买
+            if (!this.infoNode.active) {
+                this.infoNode.active = true;
+                this.scheduleOnce(function () {
+                    let pos = this.infoNode.position;
+                    this.infoNode.position = new cc.Vec2(0, 0);
+                    this.infoNode.active =false;
+                }, 1);
+                this.infoNode.runAction(cc.moveBy(1, 0, 80));
+            }
             return;
         }
         
         // 更新游戏数据
         dataManager.instance.diamondTotal -= price;
         dataManager.instance.skinUnlocked[this.skinIndex] = true;
-        dataManager.instance.skinChosen = this.skinIndex;
         dataManager.instance.saveDataToMemory();
 
         this.btnBuy.active = false;
@@ -147,9 +176,7 @@ cc.Class({
     },
 
     // 根据当前正在浏览的皮肤更改content结点的位置
-    refresh () {
-        let index = Math.round((this.contentNode.position.x + 360) / (-285));
-
+    refresh (index) {
         if (index < 0) {
             index = 0;
         } else if (index >= this.resManager.skinPrefabs.length) {
@@ -172,5 +199,11 @@ cc.Class({
             this.btnBuy.active = true;
             this.btnBuy.getChildByName('price').getComponent(cc.RichText).string = this.resManager.skinPrices[index].toString();
         }
+    },
+
+    // 根据当前选择的皮肤定位content位置
+    setContentPos () {
+        let index = dataManager.instance.skinChosen;
+        this.refresh(index);
     }
 });

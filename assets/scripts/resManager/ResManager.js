@@ -55,6 +55,12 @@ cc.Class({
             type: [cc.Prefab]
         },
 
+        // 所有皮肤的图片
+        skinSpriteFrames: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
+
         // 所有皮肤的名字
         skinNames: {
             default: [],
@@ -65,7 +71,37 @@ cc.Class({
         skinPrices: {
             default: [],
             type: [cc.Integer]
-        }
+        },
+
+        // 按钮点击音效
+        buttonClip: {
+            default: null,
+            type: cc.AudioClip
+        },
+
+        // 吃到钻石音效
+        diamondClip: {
+            default: null,
+            type: cc.AudioClip
+        },
+
+        // 掉落音效
+        fallClip: {
+            default: null,
+            type: cc.AudioClip
+        },
+
+        // 撞到障碍物音效
+        hitClip: {
+            default: null,
+            type: cc.AudioClip
+        },
+
+        // 跳跃音效
+        jumpClip: {
+            default: null,
+            type: cc.AudioClip
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:

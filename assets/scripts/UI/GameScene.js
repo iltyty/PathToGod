@@ -36,11 +36,20 @@ cc.Class({
             default: null,
             type: cc.AudioClip
         },
+
+        // GameLogicManager脚本
+        gameInstance: null,
+
+        // ResManager脚本
+        resManager: null
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this.gameInstance = cc.find('Canvas/gameLogicManager').getComponent('GameLogicManager');
+        this.resManager = cc.find('Canvas/resManager').getComponent('ResManager');
+
         this.loadRandomBg();
         this.addBtnEvents();
     },
@@ -54,18 +63,18 @@ cc.Class({
 
     addBtnEvents () {
         this.btnPause.on('touchend', function(event) {
-            cc.audioEngine.playEffect(this.audioClick, false, 1);
+            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
             this.btnPause.active = false;
             this.btnPlay.active = true;
-            this.gamePaused = true;
+            this.gameInstance.gamePaused = true;
             cc.director.pause();
         }, this);
 
         this.btnPlay.on('touchend', function(event) {
-            cc.audioEngine.playEffect(this.audioClick, false, 1);
+            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
             this.btnPlay.active = false;
             this.btnPause.active = true;
-            this.gamePaused = false;
+            this.gameInstance.gamePaused = false;
             cc.director.resume();
         }, this);
     },
