@@ -55,23 +55,24 @@ cc.Class({
     onLoad () {
         dataManager.instance.getDataFromMemory();
 
-        console.log(dataManager.instance.bestScores);
-        
-
+        this.resManager = cc.find('Canvas/resManager').getComponent('ResManager');
         this.addBtnEvents();
         this.setUI();
     },
 
     addBtnEvents () {
         this.btnRank.on('touchend', function (event) {
+            this.resManager.playEffect(this.resManager.buttonClip);
             cc.director.loadScene('RankScene');
         }, this);
 
         this.btnRePlay.on('touchend', function (event) {
+            this.resManager.playEffect(this.resManager.buttonClip);
             cc.director.loadScene('GameScene');
         }, this);
 
         this.btnHome.on('touchend', function (event) {
+            this.resManager.playEffect(this.resManager.buttonClip);
             cc.director.loadScene('StartScene');
         }, this);
     },

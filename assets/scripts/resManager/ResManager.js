@@ -1,3 +1,5 @@
+var dataManager = require('DataManager');
+
 cc.Class({
     /*
      *  资源管理器
@@ -102,15 +104,37 @@ cc.Class({
             default: null,
             type: cc.AudioClip
         },
+
+         // 选择皮肤的音效
+         selectClip: {
+            default: null,
+            type: cc.AudioClip
+        },
+
+        // 音量按钮的图片，0为开启，1为关闭
+        btnSoundSpriteFrames: {
+            default: [],
+            type: [cc.SpriteFrame]
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        dataManager.instance.getDataFromMemory();
+    },
 
     start () {
 
     },
+
+    // 播放音效
+    playEffect (clip) {
+        if (dataManager.instance.isMusicOn) {
+            cc.audioEngine.playEffect(clip, false);
+        }
+    }
+
 
     // update (dt) {},
 });

@@ -1,30 +1,58 @@
+var dataManager = require('DataManager');
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        btnBack: {
+            default: null,
+            type: cc.Node
+        },
+
+        goldText: {
+            default: null,
+            type: cc.Node
+        },
+
+        silverText: {
+            default: null,
+            type: cc.Node
+        },
+
+        copperText: {
+            default: null,
+            type: cc.Node
+        },
+
+        resManager: null
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        dataManager.instance.getDataFromMemory();
+
+        this.resManager = cc.find('Canvas/resManager').getComponent('ResManager');
+
+        this.addBtnEvents();
+        this.setUI();
+    },
+
+    addBtnEvents () {
+        this.btnBack.on('touchend', function () {
+            this.resManager.playEffect(this.resManager.buttonClip);
+            cc.director.loadScene('StartScene');
+        }, this);
+    },
+
+    setUI () {
+
+    },
 
     start () {
-
+        this.goldText.getComponent(cc.RichText).string = dataManager.instance.bestScores[0].toString();
+        this.silverText.getComponent(cc.RichText).string = dataManager.instance.bestScores[1].toString();
+        this.copperText.getComponent(cc.RichText).string = dataManager.instance.bestScores[2].toString();
     },
 
     // update (dt) {},

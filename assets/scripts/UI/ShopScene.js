@@ -69,17 +69,17 @@ cc.Class({
 
     addBtnEvents () {
         this.btnBack.on('touchend', function (event) {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             cc.director.loadScene('StartScene');
         }, this);
 
         this.btnBuy.on('touchend', function (event) {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             this.onBtnBuyTouchend();
         }, this);
 
         this.btnSelect.on('touchend', function (event) {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             this.onBtnSelectTouchend();
         }, this);
 
@@ -120,6 +120,11 @@ cc.Class({
         this.setSkinImageSize(index);
 
         this.skinName.getComponent(cc.RichText).string = this.resManager.skinNames[index];
+
+        if (this.skinIndex === dataManager.instance.skinChosen) {
+            // 当前正在浏览选中的皮肤，在皮肤名字后面添加已选择字样
+            this.skinName.getComponent(cc.RichText).string += '（已选择）';
+        }
     },
 
     // 根据当前浏览的皮肤的索引来修改皮肤图片的大小
@@ -140,6 +145,8 @@ cc.Class({
  
     // 选择皮肤按钮点击事件处理函数
     onBtnSelectTouchend () {
+        this.resManager.playEffect(this.resManager.selectClip);
+
         dataManager.instance.skinChosen = this.skinIndex;
         dataManager.instance.saveDataToMemory();
     },

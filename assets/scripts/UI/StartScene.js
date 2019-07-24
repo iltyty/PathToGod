@@ -77,6 +77,9 @@ cc.Class({
 
         // 根据当前选择的皮肤更新商店界面按钮的图片
         this.updateShopBtnImage();
+
+        // 根据声音是否开启更新音效按钮的图片
+        this.updateBtnSoundImage();
     },
 
     toGameScene() {
@@ -96,7 +99,10 @@ cc.Class({
 
     switchSoundState() {
         // 游戏是否静音
+        dataManager.instance.isMusicOn = !dataManager.instance.isMusicOn;
+        dataManager.instance.saveDataToMemory();
         
+        this.updateBtnSoundImage();
     },
 
     onBtnResetClicked () {
@@ -110,57 +116,67 @@ cc.Class({
         this.bgColor.opacity = 0;
         this.isListening = true;
         this.resetPanel.getComponent(cc.Animation).play('ResetPanelClip');
+        this.scheduleOnce(function () {
+            this.resetPanel.active = false;
+        }, 1);
     },
 
     onBtnYesClicked () {
         this.bgColor.opacity = 0;
         this.isListening = true;
         this.resetPanel.getComponent(cc.Animation).play('ResetPanelClip');
+        this.scheduleOnce(function () {
+            this.resetPanel.active = false;
+        }, 1);
+
         dataManager.instance.removeDataFromMemory();
+        dataManager.instance.getDataFromMemory();
         this.updateShopBtnImage();
     },
 
     addBtnEvents() {
         this.btnStart.on('touchend', function (event) {
             if (this.isListening) {
-                cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+                this.resManager.playEffect(this.resManager.buttonClip);
                 this.toGameScene();
             }
         }, this);
 
         this.btnShop.on('touchend', function (event) {
             if (this.isListening) {
-                cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+                this.resManager.playEffect(this.resManager.buttonClip);
                 this.toShopScene();
             }
         }, this);
 
         this.btnRank.on('touchend', function (event) {
             if (this.isListening) {
-                cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+                this.resManager.playEffect(this.resManager.buttonClip);
                 this.toRankScene();
             }
         }, this);
 
         this.btnSound.on('touchend', function (event) {
             if (this.isListening) {
-                cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+                this.resManager.playEffect(this.resManager.buttonClip);
                 this.switchSoundState();
             }
         }, this);
 
         this.btnReset.on('touchend', function () {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
-            this.onBtnResetClicked();
+            if (this.isListening) {
+                this.resManager.playEffect(this.resManager.buttonClip);
+                this.onBtnResetClicked();
+            }
         }, this);
 
         this.btnNo.on('touchend', function () {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             this.onBtnNoClicked();
         }, this);
 
         this.btnYes.on('touchend', function () {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             this.onBtnYesClicked();
         }, this);
     },
@@ -168,6 +184,18 @@ cc.Class({
     updateShopBtnImage () {
         this.btnShop.getChildByName('image').getComponent(cc.Sprite).spriteFrame
         = this.resManager.skinSpriteFrames[dataManager.instance.skinChosen];
+    },
+
+    updateBtnSoundImage () {
+        let btnSoundImageNode = this.btnSound.children[0];
+
+        if (dataManager.instance.isMusicOn) {
+            btnSoundImageNode.scale = new cc.Vec2(1, 1);
+            btnSoundImageNode.getComponent(cc.Sprite).spriteFrame = this.resManager.btnSoundSpriteFrames[0];
+        } else {
+            btnSoundImageNode.scale = new cc.Vec2(0.75, 1);
+            btnSoundImageNode.getComponent(cc.Sprite).spriteFrame = this.resManager.btnSoundSpriteFrames[1];
+        }
     },
 
     start() {

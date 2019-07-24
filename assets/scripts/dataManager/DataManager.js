@@ -48,6 +48,7 @@ var DataManager = cc.Class({
     // 从内存中读取钻石总数和最好分数
     getDataFromMemory () {
         let isNewBest = cc.sys.localStorage.getItem('isNewBest');
+        let isMusicOn = cc.sys.localStorage.getItem('isMusicOn');
         let bestScores = cc.sys.localStorage.getItem('bestScores');
         let diamondTotal = cc.sys.localStorage.getItem('diamondTotal');
         let skinChosen = cc.sys.localStorage.getItem('skinChosen');
@@ -72,6 +73,7 @@ var DataManager = cc.Class({
         }
 
         this.isNewBest = isNewBest === 'true' ? true : false;
+        this.isMusicOn = isMusicOn === 'true' ? true : false;
         this.bestScores = bestScores ? bestScores : [0, 0, 0];
         this.diamondTotal = diamondTotal ? parseInt(diamondTotal) : 0;
         this.skinChosen = skinChosen ? parseInt(skinChosen) : 0;
@@ -81,6 +83,7 @@ var DataManager = cc.Class({
     // 将最好分数和钻石总数存入内存中方便下次重新进入游戏时读取
     saveDataToMemory () {
         cc.sys.localStorage.setItem('isNewBest', this.isNewBest);
+        cc.sys.localStorage.setItem('isMusicOn', this.isMusicOn);
         cc.sys.localStorage.setItem('bestScores', this.bestScores);
         cc.sys.localStorage.setItem('diamondTotal', this.diamondTotal);
         cc.sys.localStorage.setItem('skinChosen', this.skinChosen);
@@ -89,12 +92,13 @@ var DataManager = cc.Class({
     
     // 从内存中删除数据
     removeDataFromMemory () {
+        cc.sys.localStorage.removeItem('isNewBest');
+        cc.sys.localStorage.removeItem('isMusicOn');
         cc.sys.localStorage.removeItem('bestScores');
         cc.sys.localStorage.removeItem('diamondTotal');
         cc.sys.localStorage.removeItem('skinChosen');
         cc.sys.localStorage.removeItem('skinUnlocked');
-    }
-
+    },
 });
 
 DataManager.instance = new DataManager();

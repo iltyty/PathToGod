@@ -131,7 +131,7 @@ cc.Class({
             }
         } else if (otherCollider.node.group === 'Obstacle') {
             // 碰到障碍物，游戏结束
-            cc.audioEngine.playEffect(this.resManager.hitClip, false);
+            this.resManager.playEffect(this.resManager.hitClip);
             this.node.active = false;
             this.gameInstance.gameOver = true;
             this.scheduleOnce(function () {
@@ -139,7 +139,7 @@ cc.Class({
             }, 1);
         } else if (otherCollider.node.group === 'PickUp') {
             // 吃到钻石
-            cc.audioEngine.playEffect(this.resManager.diamondClip, false);
+            this.resManager.playEffect(this.resManager.diamondClip);
             otherCollider.node.active = false;
             this.gameInstance.diamondCount++;
             this.gameInstance.refreshUI();
@@ -153,19 +153,22 @@ cc.Class({
     update (dt) {
         if (this.rigidbody.linearVelocity.y < -200) {
             // 人物正在下落，判断是否跳跃至平台
-            if (!this.isFallingTowardsPlatform() && !this.gameInstance.gameOver) {
+            if (!this.gameInstance.gameOver && !this.isFallingTowardsPlatform()) {
                 // 没有落到平台，游戏结束
                 this.node.zIndex = -1;
                 this.node.getComponent(cc.PhysicsCircleCollider).enabled = false;
                 this.gameInstance.gameOver = true;
+                this.resManager.playEffect(this.resManager.fallClip);
                 this.scheduleOnce(function () {
                     this.gameInstance.toGameOverScene();
                 }, 1); 
             }
         }
 
-        if (this.node.parent.getChildByName('camera').position.y - this.node.position.y > 200) {
-            cc.audioEngine.playEffect(this.resManager.fallClip, false);
+        if (!this.gameInstance.gameOver && 
+            (this.node.parent.getChildByName('camera').position.y -
+             this.node.position.y) > 200) {
+            this.resManager.playEffect(this.resManager.fallClip);
             this.gameInstance.gameOver = true;
             this.scheduleOnce(function () {
                 this.gameInstance.toGameOverScene();
@@ -192,7 +195,7 @@ cc.Class({
     },
 
     jump () {
-        cc.audioEngine.playEffect(this.resManager.jumpClip, false); 
+        this.resManager.playEffect(this.resManager.jumpClip);
         // 人物跳跃函数
         if (this.isHeadRight) {
             // 向右跳

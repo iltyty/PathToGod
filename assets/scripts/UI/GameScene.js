@@ -63,7 +63,7 @@ cc.Class({
 
     addBtnEvents () {
         this.btnPause.on('touchend', function(event) {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             this.btnPause.active = false;
             this.btnPlay.active = true;
             this.gameInstance.gamePaused = true;
@@ -71,7 +71,7 @@ cc.Class({
         }, this);
 
         this.btnPlay.on('touchend', function(event) {
-            cc.audioEngine.playEffect(this.resManager.buttonClip, false);
+            this.resManager.playEffect(this.resManager.buttonClip);
             this.btnPlay.active = false;
             this.btnPause.active = true;
             this.gameInstance.gamePaused = false;

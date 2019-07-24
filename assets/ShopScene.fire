@@ -806,7 +806,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "52WClnuuFD1b+nqLlfS40o"
+    "_id": "a5KaPFBi9JVabcDQVLB4wl"
   },
   {
     "__type__": "cc.Label",
@@ -834,7 +834,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "1aNcAUu35EFaCnn6CB0iz1"
+    "_id": "d7ua4CyEhCXLefT98+rIJd"
   },
   {
     "__type__": "cc.RichText",
@@ -979,7 +979,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "023ft4Va5Pe5F5oOVSnAJ6"
+    "_id": "aa86+z5fRJbYY/QDfd+gJZ"
   },
   {
     "__type__": "cc.Label",
@@ -1007,7 +1007,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "37O6CrTFRPtZ4BP7B5W792"
+    "_id": "44aHtKrMVB85pOM15koWdY"
   },
   {
     "__type__": "cc.RichText",
@@ -2323,18 +2323,11 @@
     "buttonClip": {
       "__uuid__": "b02fc343-a261-494e-a9b1-14ee1af02e6b"
     },
-    "diamondClip": {
-      "__uuid__": "d32f604a-0d3b-40f3-9003-ec7730597d1f"
-    },
-    "fallClip": {
-      "__uuid__": "d1fd5845-a3d7-419b-a4b3-1c9ae9bce66e"
-    },
-    "hitClip": {
-      "__uuid__": "26eedb1f-e783-4a65-a865-d1165eb2da32"
-    },
-    "jumpClip": {
-      "__uuid__": "cf57ed03-e07f-4da7-aad2-27ac707ef947"
-    },
+    "diamondClip": null,
+    "fallClip": null,
+    "hitClip": null,
+    "jumpClip": null,
+    "btnSoundSpriteFrames": [],
     "_id": "4bOLqrQNpDbYUDh2+oLd1h"
   },
   {
