@@ -50,7 +50,16 @@ var DataManager = cc.Class({
         let bestScores = cc.sys.localStorage.getItem('bestScores');
         let diamondTotal = cc.sys.localStorage.getItem('diamondTotal');
         let skinChosen = cc.sys.localStorage.getItem('skinChosen');
-        let skinUnlocked = cc.sys.localStorage.getItem('skinUnlocked');
+        let skinUnlocked = cc.sys.localStorage.getItem('skinUnlocked').split(',');
+
+        for (let i in skinUnlocked) {
+            if (skinUnlocked[i] === 'true') {
+                skinUnlocked[i] = true;
+            } else {
+                skinUnlocked[i] = false;
+            }
+        }
+        console.log(skinUnlocked)
 
         this.bestScores = bestScores ? bestScores : [0, 0, 0];
         this.diamondTotal = diamondTotal ? parseInt(diamondTotal) : 0;
