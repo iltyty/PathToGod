@@ -101,6 +101,7 @@ cc.Class({
         // 游戏是否静音
         dataManager.instance.isMusicOn = !dataManager.instance.isMusicOn;
         dataManager.instance.saveDataToMemory();
+        console.log('music:', dataManager.instance.isMusicOn)
         
         this.updateBtnSoundImage();
     },

@@ -41,8 +41,18 @@ var DataManager = cc.Class({
         }
     },
 
-    start () {
+    onLoad () {
+        console.log('onload');
+        this.bestScores = [0, 0, 0];
+        this.skinUnlocked = [true, false, false, false];
+        this.saveDataToMemory();
+    },
 
+    start () {
+        console.log('start');
+        this.bestScores = [0, 0, 0];
+        this.skinUnlocked = [true, false, false, false];
+        this.saveDataToMemory();
     },
 
     // 从内存中读取钻石总数和最好分数
@@ -54,30 +64,90 @@ var DataManager = cc.Class({
         let skinChosen = cc.sys.localStorage.getItem('skinChosen');
         let skinUnlocked = cc.sys.localStorage.getItem('skinUnlocked');
 
-        if (bestScores) {
-            bestScores = bestScores.split(',');
+        // if (bestScores) {
+        //     let slice = '';
+        //     let result = [];
+        //     let index = 0;
+        //     for (let i = 0; i < bestScores.length; i++) {
+        //         if (bestScores[i] === ',') {
+        //             result[index++] = slice;
+        //             slice = '';
+        //         } else {
+        //             slice += bestScores[i];
+        //         }
+        //     }
+        //     result[index] = slice;
+        //     bestScores = result;
+        // }
+        // if (skinUnlocked) {
+        //     let slice = '';
+        //     let result = [];
+        //     let index = 0;
+        //     for (let i = 0; i < skinUnlocked.length; i++) {
+        //         if (skinUnlocked[i] === ',') {
+        //             result[index++] = slice;
+        //             slice = '';
+        //         } else {
+        //             slice += skinUnlocked[i];
+        //         }
+        //     }
+        //     result[index] = slice;
+        //     skinUnlocked = result;
+        // }
+
+        // for (let i in bestScores) {
+        //     bestScores[i] = parseInt(bestScores[i]);
+        // }
+        // for (let i in skinUnlocked) {
+        //     if (skinUnlocked[i] === 'true') {
+        //         skinUnlocked[i] = true;
+        //     } else {
+        //         skinUnlocked[i] = false;
+        //     }
+        // }
+
+        if (!isNewBest || isNewBest === 'false') {
+            this.isNewBest = false;
+        } else {
+            this.isNewBest = true;
         }
-        if (skinUnlocked) {
-            skinUnlocked = skinUnlocked.split(',');
+        
+        if (!isMusicOn || isMusicOn === 'false') {
+            this.isMusicOn = false;
+        } else {
+            this.isMusicOn = true;
         }
 
-        for (let i in bestScores) {
-            bestScores[i] = parseInt(bestScores[i]);
-        }
-        for (let i in skinUnlocked) {
-            if (skinUnlocked[i] === 'true') {
-                skinUnlocked[i] = true;
-            } else {
-                skinUnlocked[i] = false;
-            }
+        if (!bestScores) {
+            this.bestScores = [0, 0, 0];
+        } else {
+            this.bestScores = bestScores;
         }
 
-        this.isNewBest = isNewBest === 'true' ? true : false;
-        this.isMusicOn = isMusicOn === 'true' ? true : false;
-        this.bestScores = bestScores ? bestScores : [0, 0, 0];
-        this.diamondTotal = diamondTotal ? parseInt(diamondTotal) : 0;
-        this.skinChosen = skinChosen ? parseInt(skinChosen) : 0;
-        this.skinUnlocked = skinUnlocked ? skinUnlocked : [true, false, false, false];
+        if (!skinUnlocked) {
+            this.skinUnlocked = [true, false, false, false];
+        } else {
+            this.skinUnlocked = skinUnlocked;
+        }
+
+        if (!diamondTotal) {
+            this.diamondTotal = 0;
+        } else {
+            this.diamondTotal = parseInt(diamondTotal);
+        }
+
+        if (!skinChosen) {
+            this.skinChosen = 0;
+        } else {
+            this.skinChosen = parseInt(skinChosen);
+        }
+
+        // this.isNewBest = (isNewBest === 'true' ? true : false);
+        // this.isMusicOn = (isMusicOn === 'true' ? true : false);
+        // this.bestScores = (bestScores != null ? bestScores : [0, 0, 0]);
+        // this.diamondTotal = (diamondTotal != null ? parseInt(diamondTotal) : 0);
+        // this.skinChosen = (skinChosen != null ? parseInt(skinChosen) : 0);
+        // this.skinUnlocked = (skinUnlocked != null ? skinUnlocked : [true, false, false, false]);
     },
 
     // 将最好分数和钻石总数存入内存中方便下次重新进入游戏时读取

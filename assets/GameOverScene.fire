@@ -607,7 +607,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "38SnOsoo1FSJwbEWtU1m9r"
+    "_id": "c2T4Br2QxFqKGB7Zl+Ue6R"
   },
   {
     "__type__": "cc.Label",
@@ -635,7 +635,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "2ef/NkiXJGL5BtzBnzLmqz"
+    "_id": "73Y0U6GbBOuZd3Bff3Dyt7"
   },
   {
     "__type__": "cc.RichText",
@@ -782,7 +782,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "36VT3BgGRL05yvHuFFLWGh"
+    "_id": "0eMQdlLLpDr7hEfrtI5K9K"
   },
   {
     "__type__": "cc.Label",
@@ -808,7 +808,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "b7GxLP4YFNu5BQ9Pw30UCK"
+    "_id": "36ww06oa1JaaisDOxR7gV/"
   },
   {
     "__type__": "cc.RichText",
@@ -1101,7 +1101,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 45.61,
-      "height": 63
+      "height": 100.8
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1162,7 +1162,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 45.61,
-      "height": 63
+      "height": 100.8
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1172,7 +1172,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": -22.805,
-      "y": -31.5,
+      "y": -50.4,
       "z": 0
     },
     "_scale": {
@@ -1193,7 +1193,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "e7GyV7JLFMmaAlBZQE/DD6"
+    "_id": "53oiPTVItFj4gA3OadP5Wx"
   },
   {
     "__type__": "cc.Label",
@@ -1208,7 +1208,7 @@
     "_string": "+0",
     "_N$string": "+0",
     "_fontSize": 40,
-    "_lineHeight": 50,
+    "_lineHeight": 80,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -1219,7 +1219,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "2aMLdt/N5DNJzbY/w8xeuz"
+    "_id": "68vVAwouJFm7yUzhzcG1Sd"
   },
   {
     "__type__": "cc.RichText",
@@ -1236,7 +1236,7 @@
     "_N$fontSize": 40,
     "_N$font": null,
     "_N$maxWidth": 0,
-    "_N$lineHeight": 50,
+    "_N$lineHeight": 80,
     "_N$imageAtlas": null,
     "_N$handleTouchEvent": true,
     "_id": "57vqyev/RIeZDj7estP5m0"
@@ -1983,6 +1983,7 @@
     "fallClip": null,
     "hitClip": null,
     "jumpClip": null,
+    "selectClip": null,
     "btnSoundSpriteFrames": [],
     "_id": "fdg1JNs6ZEa41eg0KvhzU1"
   },

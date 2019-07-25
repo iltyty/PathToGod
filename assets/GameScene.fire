@@ -726,7 +726,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "fdN7pOiK9PAYLogqNel4qd"
+    "_id": "d04plOnHFDz75sP4zye9v2"
   },
   {
     "__type__": "cc.Label",
@@ -752,7 +752,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "08GQLWq9dH85Ocnb++/KE0"
+    "_id": "ddl/rmMNdP2Id7Ywufj+ca"
   },
   {
     "__type__": "cc.RichText",
@@ -805,7 +805,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 44.92,
-      "height": 63
+      "height": 126
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -866,7 +866,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 44.92,
-      "height": 63
+      "height": 126
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -876,7 +876,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": -22.46,
-      "y": -31.5,
+      "y": -63,
       "z": 0
     },
     "_scale": {
@@ -897,7 +897,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "bbKm18XmJN95zE52apzlZW"
+    "_id": "6eUhgYCb5GR77QSCwZ6LxX"
   },
   {
     "__type__": "cc.Label",
@@ -912,7 +912,7 @@
     "_string": "0",
     "_N$string": "0",
     "_fontSize": 80,
-    "_lineHeight": 50,
+    "_lineHeight": 100,
     "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "99dbbfa4-0c02-4899-a5e2-d45743e8ab6e"
@@ -925,7 +925,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "bajHe7oEJLib5DG5LEeFUG"
+    "_id": "5aeRJYNSpDoq0KxYwh6vHy"
   },
   {
     "__type__": "cc.RichText",
@@ -944,7 +944,7 @@
       "__uuid__": "99dbbfa4-0c02-4899-a5e2-d45743e8ab6e"
     },
     "_N$maxWidth": 0,
-    "_N$lineHeight": 50,
+    "_N$lineHeight": 100,
     "_N$imageAtlas": null,
     "_N$handleTouchEvent": true,
     "_id": "27P/wfScdA0LybLCYpHfWT"
@@ -1114,6 +1114,8 @@
     "jumpClip": {
       "__uuid__": "cf57ed03-e07f-4da7-aad2-27ac707ef947"
     },
+    "selectClip": null,
+    "btnSoundSpriteFrames": [],
     "_id": "c4aKU7b5JEd6p6bPTanoYR"
   },
   {
@@ -1545,7 +1547,7 @@
     "_enabled": true,
     "_type": 2,
     "_allowSleep": false,
-    "_gravityScale": 10,
+    "_gravityScale": 15,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {

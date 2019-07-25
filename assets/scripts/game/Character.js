@@ -78,7 +78,7 @@ cc.Class({
     onMouseDown(event) {
         let pos = event.getLocation();
 
-        if (this.gameInstance.gamePaused) {
+        if (this.gameInstance.gamePaused || this.gameInstance.gameOver) {
             return;
         }
 
@@ -132,8 +132,10 @@ cc.Class({
         } else if (otherCollider.node.group === 'Obstacle') {
             // 碰到障碍物，游戏结束
             this.resManager.playEffect(this.resManager.hitClip);
-            this.node.active = false;
             this.gameInstance.gameOver = true;
+            
+            this.node.opacity = 0;
+
             this.scheduleOnce(function () {
                 this.gameInstance.toGameOverScene();
             }, 1);
@@ -168,6 +170,8 @@ cc.Class({
         if (!this.gameInstance.gameOver && 
             (this.node.parent.getChildByName('camera').position.y -
              this.node.position.y) > 200) {
+            this.node.zIndex = -1;
+            this.node.getComponent(cc.PhysicsCircleCollider).enabled = false;
             this.resManager.playEffect(this.resManager.fallClip);
             this.gameInstance.gameOver = true;
             this.scheduleOnce(function () {

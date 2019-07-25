@@ -48,7 +48,7 @@ cc.Class({
     },
 
     update (dt) {
-        if (this.timerBegan && this.gameInstance.moveBegan) {
+        if (this.timerBegan && this.gameInstance.moveBegan && !this.gameInstance.gameOver) {
             this.timeLeft -= dt;
             
             if (this.timeLeft < 0) {

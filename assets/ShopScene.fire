@@ -714,7 +714,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 44.92,
-      "height": 63
+      "height": 126
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -775,7 +775,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 44.92,
-      "height": 63
+      "height": 126
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -785,7 +785,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": -22.46,
-      "y": -31.5,
+      "y": -63,
       "z": 0
     },
     "_scale": {
@@ -806,7 +806,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "a5KaPFBi9JVabcDQVLB4wl"
+    "_id": "0c67tG/K1GkpNJ4YNwkRg3"
   },
   {
     "__type__": "cc.Label",
@@ -821,7 +821,7 @@
     "_string": "0",
     "_N$string": "0",
     "_fontSize": 80,
-    "_lineHeight": 50,
+    "_lineHeight": 100,
     "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "99dbbfa4-0c02-4899-a5e2-d45743e8ab6e"
@@ -834,7 +834,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "d7ua4CyEhCXLefT98+rIJd"
+    "_id": "daYdJf/xdE8ru3Pc3FDACH"
   },
   {
     "__type__": "cc.RichText",
@@ -853,7 +853,7 @@
       "__uuid__": "99dbbfa4-0c02-4899-a5e2-d45743e8ab6e"
     },
     "_N$maxWidth": 0,
-    "_N$lineHeight": 50,
+    "_N$lineHeight": 100,
     "_N$imageAtlas": null,
     "_N$handleTouchEvent": true,
     "_id": "ae9E5yUXxAg5/TQmJyy3lu"
@@ -888,7 +888,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 280,
+      "width": 240,
       "height": 94.5
     },
     "_anchorPoint": {
@@ -947,7 +947,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 280,
+      "width": 240,
       "height": 94.5
     },
     "_anchorPoint": {
@@ -957,7 +957,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -140,
+      "x": -120,
       "y": -47.25,
       "z": 0
     },
@@ -979,7 +979,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "aa86+z5fRJbYY/QDfd+gJZ"
+    "_id": "15U2VqGFFIf7SVWpX7wz7x"
   },
   {
     "__type__": "cc.Label",
@@ -993,7 +993,7 @@
     "_useOriginalSize": true,
     "_string": "央格鲁人",
     "_N$string": "央格鲁人",
-    "_fontSize": 70,
+    "_fontSize": 60,
     "_lineHeight": 75,
     "_enableWrapText": true,
     "_N$file": {
@@ -1007,7 +1007,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "44aHtKrMVB85pOM15koWdY"
+    "_id": "8cVKAPrTBM4pYK2O0vpgJT"
   },
   {
     "__type__": "cc.RichText",
@@ -1021,7 +1021,7 @@
     "_isSystemFontUsed": false,
     "_N$string": "央格鲁人",
     "_N$horizontalAlign": 1,
-    "_N$fontSize": 70,
+    "_N$fontSize": 60,
     "_N$font": {
       "__uuid__": "99dbbfa4-0c02-4899-a5e2-d45743e8ab6e"
     },
@@ -2316,9 +2316,9 @@
     ],
     "skinPrices": [
       20,
-      1,
+      50,
       200,
-      3
+      300
     ],
     "buttonClip": {
       "__uuid__": "b02fc343-a261-494e-a9b1-14ee1af02e6b"
@@ -2327,6 +2327,9 @@
     "fallClip": null,
     "hitClip": null,
     "jumpClip": null,
+    "selectClip": {
+      "__uuid__": "bedd8a56-ca02-4ece-99fa-4c07c6c15b6f"
+    },
     "btnSoundSpriteFrames": [],
     "_id": "4bOLqrQNpDbYUDh2+oLd1h"
   },

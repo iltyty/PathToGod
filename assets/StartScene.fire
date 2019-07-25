@@ -1870,6 +1870,7 @@
     "fallClip": null,
     "hitClip": null,
     "jumpClip": null,
+    "selectClip": null,
     "btnSoundSpriteFrames": [
       {
         "__uuid__": "4ce4225a-99f6-407c-a682-0fea2863aa7e"
@@ -2978,7 +2979,7 @@
       "width": 720,
       "height": 1280
     },
-    "_fitWidth": false,
+    "_fitWidth": true,
     "_fitHeight": true,
     "_id": "1fVtnSRQxGh5C10XJPTSbo"
   },

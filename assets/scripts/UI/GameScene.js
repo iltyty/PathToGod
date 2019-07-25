@@ -50,9 +50,12 @@ cc.Class({
         this.gameInstance = cc.find('Canvas/gameLogicManager').getComponent('GameLogicManager');
         this.resManager = cc.find('Canvas/resManager').getComponent('ResManager');
 
+
+
         this.loadRandomBg();
         this.addBtnEvents();
     },
+
 
     loadRandomBg () {
         // 加载一张随机的背景图片
